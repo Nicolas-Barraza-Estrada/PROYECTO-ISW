@@ -22,6 +22,15 @@ async function createUsers() {
       ),
       userRepository.save(
         userRepository.create({
+          nombreCompleto: "Nicolas Ignacio Barraza Estrada",
+          rut: "20.275.257-8",
+          email: "nicolas.barraza2024@gmail.cl",
+          password: await encryptPassword("admin1234"),
+          rol: "administrador",
+        }),
+      ),
+      userRepository.save(
+        userRepository.create({
           nombreCompleto: "Diego Sebastián Ampuero Belmar",
           rut: "21.151.897-9",
           email: "usuario1.2024@gmail.cl",

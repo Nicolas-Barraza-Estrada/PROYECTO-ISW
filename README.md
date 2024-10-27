@@ -1,3 +1,6 @@
+# Resumen
+  Clase 3 1:11:00 || userSchema  
+
 # Plantilla-ISW-Proyecto-2024
 
 Una plantilla base para proyectos de Ingeniería de Software (ISW) desarrollados durante el año 2024-2. Esta plantilla está diseñada para ayudar a los estudiantes a estructurar y organizar sus proyectos de software, incluyendo tanto la parte de Backend como de Frontend.

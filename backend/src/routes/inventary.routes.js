@@ -4,6 +4,10 @@ import { isAdmin } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createInventary,
+    deleteInventary,
+    getInventary,
+    getInventaryById,
+    updateInventary
 } from "../controllers/inventary.controller.js";
 
 const router = Router();
@@ -16,5 +20,9 @@ router
 //    .get("/", getInventaries,)
 //    .get("/detail/", getInventary)
     .post("/crear/", createInventary)
+    .get("/listar/", getInventary)
+    .get("/listarByID/:nombre", getInventaryById)
+    .put("/actualizar/", updateInventary)
+    .delete("/eliminar/:id", deleteInventary);
 
 export default router;

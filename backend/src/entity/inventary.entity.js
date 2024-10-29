@@ -6,7 +6,7 @@ const InventarySchema = new EntitySchema({
     name: "Inventary",
     tableName: "inventary",
     columns: {
-        id: {
+        idProducto: {
         type: "int",
         primary: true,
         generated: true,
@@ -39,7 +39,7 @@ const InventarySchema = new EntitySchema({
     indices: [
         {
         name: "IDX_INVENTARY",
-        columns: ["id"],
+        columns: ["idProducto"],
         unique: true,
         },
         {

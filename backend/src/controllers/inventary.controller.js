@@ -18,14 +18,15 @@ export async function createInventary(req, res) {
       });
     }
     
-    //valida si el id ya existe
-    const inventaryExist = await inventaryR.findOneBy({ id: inventary.id });
+    //valida si el nombre ya existe
+    const inventaryExist = await inventaryR.findOne({ where: { nombre: inventary.nombre } });
     if(inventaryExist){
       return res.status(400).json({
-        message: "El id ya existe"
+        message: "Producto ya existe"
       });
     }
-    // el nombre, el precio mayor que 0, el stock mayor que 0
+
+    // el nombre > 3, el precio mayor que 0, el stock mayor que 0
     if(inventary.nombre.length < 3 || inventary.precio < 1 || inventary.stock < 1){
       return res.status(400).json({
         message: "Datos incorrectos"
@@ -107,7 +108,7 @@ export async function updateInventary(req, res){
       });
     }
 
-    const inventaryExist = await inventaryR.findOne({ where: { id: inventary.id } });
+    const inventaryExist = await inventaryR.findOne({ where: { idProducto: inventary.idProducto } });
     if(!inventaryExist){
       return res.status(404).json({
         message: "Producto no encontrado"
@@ -143,7 +144,7 @@ export async function updateInventary(req, res){
 export async function deleteInventary(req, res){
   try {
     const inventaryR = AppDataSource.getRepository(InventarySchema);
-    const inventary = await inventaryR.findOne({ where: { id: req.params.id } });
+    const inventary = await inventaryR.findOne({ where: { idProducto: req.params.idProducto } });
     
     if(!inventary){
       return res.status(404).json({

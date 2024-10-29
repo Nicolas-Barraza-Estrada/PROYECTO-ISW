@@ -21,7 +21,7 @@ router
 //    .get("/detail/", getInventary)
     .post("/crear/", createInventary)
     .get("/listar/", getInventary)
-    .get("/listarByID/:nombre", getInventaryById)
+    .get("/listarBy/:nombre", getInventaryById)
     .put("/actualizar/", updateInventary)
     .delete("/eliminar/:id", deleteInventary);
 

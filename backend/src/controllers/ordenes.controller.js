@@ -12,30 +12,26 @@ export async function createOrdenes(req, res) {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
         const ordenes = req.body;
         
-        console.log(ordenes)
         // Validar que los campos requeridos no estén vacíos 
         if (!ordenes.rut_Trabajador || !ordenes.n_orden || !ordenes.nombreCliente 
             || !ordenes.fono_cliente || !ordenes.email_cliente || !ordenes.descripcion 
             || !ordenes.estado) {
-                return res.status(400).json({
-                    message: "Datos incompletos"
-                  });
+                return handleErrorClient(res, 404, "Datos incompletos",ordenes);
         }
-        
+        console.log(ordenes.rut_Trabajador)
+
         // Valida que el rut_Trabajor este registrado en en esquema de la base de datos (user)
         const userR = AppDataSource.getRepository(UserSchema);
-        const user = await userR.findOneBy({ rut: ordenes.rut_Trabajor });
+        const user = await userR.findOneBy({ rut: ordenes.rut_Trabajador });
         if (!user) {
         console.log("El rut del trabajador no está registrado");
-        handleErrorServer(res, 500, "El rut del trabajador no está registrado",
-             "El rut del trabajador no está registrado")};
+        return handleErrorServer(res, 500, "El rut del trabajador no está registrado")};
         
         // n° orden es unico
         const ordenesExiste = await ordenesR.findOneBy({ n_orden: ordenes.n_orden });
         if (ordenesExiste) {
-            console.log("El nuemro de orden ya está registrado");
-            handleErrorServer(res, 500, "El nuemro de orden ya está registrado",
-             "El nuemro de orden ya está registrado")
+            console.log("El numero de orden ya está registrado");
+            return handleErrorServer(res, 500, "El numero de orden ya está registrado")
         };
         
         const newOrdenes = ordenesR.create({
@@ -47,20 +43,13 @@ export async function createOrdenes(req, res) {
             descripcion: ordenes.descripcion,
             estado: ordenes.estado,
             costo: ordenes.costo,
-            // Incluye cualquier otro campo necesario
         });
         
         const ordenesSaved = await ordenesR.save(newOrdenes); 
     
-        return res.status(201).json({
-        message: "Producto creado",
-        data : ordenesSaved
-        });
+        return handleSuccess(res, 200, "Orden de trabajo creada correctamente", ordenesSaved);
     } catch (error) {
-        return res.status(500).json({
-        message: "Error al crear el producto",
-        error: error.message
-        });
+        return handleErrorServer(res, 500, error.message);
     }
     }
 
@@ -70,21 +59,12 @@ export async function getOrdenes(req, res) {
         const ordenes = await ordenesR.find();
         console.log(ordenes)
         if (!ordenes) {
-        return res.status(404).json({
-            message: "No hay ordenes",
-            data: []
-        });
+            return handleErrorServer(res, 500, "NO existen ordenes de trabajo");
         }
-        
-        return res.status(200).json({
-        message: "Lista de ordenes",
-        data: ordenes
-        });
+
+        return handleSuccess(res, 200, "Lista de ordenes", ordenes);
     } catch (error) {
-        return res.status(500).json({
-        message: "Error al obtener las ordenes",
-        error: error.message
-        });
+        return handleErrorServer(res, 500, error.message);
     }
 }
 
@@ -97,11 +77,11 @@ export async function getOrden(req, res) {
         const orden = await ordenesR.findOneBy({ n_orden: n_orden });
 
         if (!orden) {
-        handleErrorClient(res, 404, "Orden no encontrada", "Orden no encontrada");
+        return handleErrorClient(res, 404, "Orden no encontrada", n_orden);
         }
         return handleSuccess(res, 200, "Orden encontrada", orden);
     } catch (error) {
-        return handleErrorServer(res, 500, "Error al obtener la orden", error.message);
+        return handleErrorServer(res, 500, error.message);
     }
 }
 
@@ -113,7 +93,7 @@ export async function updateOrden(req, res) {
         
         //validar que todos los campos existan
         if ( !ordenes.n_orden || !ordenes.descripcion || !ordenes.estado || !ordenes.costo) {
-        handleErrorServer(res, 500, "Faltan campos requeridos", "Faltan campos requeridos");
+            return handleErrorClient(res, 404, "Datos incompletos",ordenes);
         }
 
         const ordenExist = await ordenesR.findOne(
@@ -122,10 +102,8 @@ export async function updateOrden(req, res) {
             }
         )
         console.log(ordenExist)
-        if (ordenExist === null) {
-            return res.status(404).json({
-                message: "No se encontro la orden"
-            });
+        if (!ordenExist) {
+            return handleErrorServer(res, 500, "No existe la orden de trabajo");
         }
         
         ordenExist.descripcion = ordenes.descripcion;
@@ -133,12 +111,9 @@ export async function updateOrden(req, res) {
         ordenExist.costo = ordenes.costo;
 
         const ordenUpdate = await ordenesR.save(ordenExist);
-        return res.status(200).json({
-            message: "Producto actualizado",
-            data: ordenUpdate
-          });
+        return handleSuccess(res, 200, "Orden de trabajo actualizada", ordenUpdate);
 
     } catch (error) {
-        return handleErrorServer(res, 500, "Error al actualizar la orden", error.message);
+        return handleErrorServer(res, 500, error.message);
     }
 }

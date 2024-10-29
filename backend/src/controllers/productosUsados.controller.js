@@ -17,9 +17,7 @@ import {
             console.log(productosUsados)
             // Validar que los campos requeridos no estén vacíos 
             if (!productosUsados.n_orden || !productosUsados.idProducto || !productosUsados.cantidad) {
-                return res.status(400).json({
-                    message: "Datos incompletos"
-                  });
+                return handleErrorClient(res, 404, "Datos incompletos",productosUsados);
             }
             //valida si existe la orden en la tabla ordenes
             const ordenesR = AppDataSource.getRepository(OrdenesSchema);
@@ -35,19 +33,15 @@ import {
             const inventary = await inventaryR.findOneBy({ idProducto: productosUsados.idProducto });
             if (!inventary) {
                 console.log("El producto no está registrado");
-                return res.status(500).json({
-                    message: "El producto no está registrado"
-                });
+                return handleErrorServer(res, 500, "NO existe la orden de trabajo");
             }
             //valida que la cantidad de productosUsados no sea mayor a la cantidad de productos en inventary
             if (productosUsados.cantidad > inventary.stock) {
                 console.log("La cantidad de productos usados es mayor a la cantidad de productos en inventary");
-                return res.status(500).json({
-                    message: "La cantidad de productos usados es mayor a la cantidad de productos en inventary"
-                });
+                return handleErrorClient(res, 404, 
+                    "La cantidad de productos usados es mayor a la cantidad de productos en inventary",productosUsados);
             }
             
-            //inventary.cantidad = inventary.cantidad - productosUsados.cantidad;
             console.log(inventary.stock);
             console.log(productosUsados.cantidad);
             
@@ -56,9 +50,8 @@ import {
                 { n_orden: productosUsados.n_orden, idProducto: productosUsados.idProducto });
             if (productosUsadosExiste) {
                 console.log("La relación ya está registrada");
-                return res.status(500).json({
-                    message: "La relación ya está registrada"
-                });
+                return handleErrorClient(res, 404, 
+                    "Ya registró esta relación",productosUsados);
             }
             
             const newProductosUsados = productosUsadosR.create({
@@ -71,11 +64,8 @@ import {
             // Actualiza la cantidad de productos en inventary
             inventary.stock = inventary.stock - productosUsados.cantidad;
             await inventaryR.save(inventary);
-            
-            return res.status(201).json({
-            message: "Producto creado",
-            data : productosUsadosSaved
-            });
+
+            return handleSuccess(res, 200, "Producto creado correctamente", productosUsadosSaved);
         } catch (error) {
             return res.status(500).json({
                 message: "Error en el servidor"
@@ -91,17 +81,15 @@ import {
     
             // Validar que los campos requeridos no estén vacíos 
             if (!productosUsados.n_orden || !productosUsados.idProducto || !productosUsados.cantidad) {
-                return res.status(400).json({
-                    message: "Datos incompletos"
-                });
+                return handleErrorClient(res, 404, "Datos incompletos",productosUsados);
             }
             //valida si existe la orden en la tabla ordenes
             const ordenesR = AppDataSource.getRepository(OrdenesSchema);
             const ordenes = await ordenesR.findOneBy({ n_orden: productosUsados.n_orden });
 
             if (!ordenes) {
-                console.log("La orden no está registrada");
-                return handleErrorServer(res, 500, "Error al obtener la orden");
+                console.log("La orden de trabajo no está registrada");
+                return handleErrorServer(res, 500, "La orden de trabajo no está registrada");
             }
 
             //valida si existe el producto en la tabla inventary
@@ -109,18 +97,15 @@ import {
             const inventary = await inventaryR.findOneBy({ idProducto: productosUsados.idProducto });
             if (!inventary) {
                 console.log("El producto no está registrado");
-                return res.status(500).json({
-                    message: "El producto no está registrado"
-                });
+                return handleErrorServer(res, 500, "El producto no está registrado");
             }
             //valida que la cantidad de productosUsados no sea mayor a la cantidad de productos en inventary
             console.log(productosUsados.cantidad);
             console.log(inventary.stock);
             if (productosUsados.cantidad > inventary.stock) {
                 console.log("La cantidad de productos usados es mayor a la cantidad de productos en inventary");
-                return res.status(500).json({
-                    message: "La cantidad de productos usados es mayor a la cantidad de productos en inventary"
-                });
+                return handleErrorClient(res, 404, 
+                    "La cantidad de productos usados es mayor a la cantidad de productos en inventary",productosUsados);
             }
 
             //valida si existe la combinacion de n_orden e idProducto, solo si existe se actualiza
@@ -128,9 +113,7 @@ import {
                 { n_orden: productosUsados.n_orden, idProducto: productosUsados.idProducto });
             if (!productosUsadosExiste) {
                 console.log("La relación no está registrada");
-                return res.status(500).json({
-                    message: "La relación no está registrada"
-                });
+                return handleErrorServer(res, 500, "La relación no está registrada");
             }
             // Actualiza la cantidad de productos en productosUsados
             productosUsadosExiste.cantidad += productosUsados.cantidad;
@@ -139,16 +122,13 @@ import {
             // Actualiza la cantidad de productos en inventary
             inventary.stock -= productosUsados.cantidad;
             await inventaryR.save(inventary);
-    
-            return res.status(200).json({
-                message: "Relación actualizada y stock ajustado",
-                data: inventary
-            });
+
+            return handleSuccess(res, 200, "Relación actualizada y stock ajustado", inventary); 
         } catch (error) {
             console.error("Error en el servidor:", error.message);
             return res.status(500).json({
                 message: "Error en el servidor",
-                error: error.message // Incluye el mensaje de error específico para depuración
+                error: error.message 
             });
         }
     }

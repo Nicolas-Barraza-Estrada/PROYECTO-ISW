@@ -13,24 +13,18 @@ export async function createInventary(req, res) {
     const inventary = req.body;
 
     if(!inventary.nombre || !inventary.precio || !inventary.stock){
-      return res.status(400).json({
-        message: "Datos incompletos"
-      });
+      return handleErrorClient(res, 404, "Datos incompletos",inventary);
     }
     
     //valida si el nombre ya existe
     const inventaryExist = await inventaryR.findOne({ where: { nombre: inventary.nombre } });
     if(inventaryExist){
-      return res.status(400).json({
-        message: "Producto ya existe"
-      });
+      return handleErrorClient(res, 404, "El nombre ya existe",inventaryExist);
     }
 
     // el nombre > 3, el precio mayor que 0, el stock mayor que 0
     if(inventary.nombre.length < 3 || inventary.precio < 1 || inventary.stock < 1){
-      return res.status(400).json({
-        message: "Datos incorrectos"
-      });
+      return handleErrorClient(res, 404, "Los datos ingresados no cumplen los requisitos",inventary);
     }
 
     const newInventary = inventaryR.create(
@@ -42,15 +36,9 @@ export async function createInventary(req, res) {
     );
     const inventarySaved = await inventaryR.save(newInventary); 
 
-    return res.status(201).json({
-      message: "Producto creado",
-      data : inventarySaved
-    });
+    return handleSuccess(res, 200, "Producto creado correctamente", inventarySaved);
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al crear el producto",
-      error: error.message
-    });
+    return handleErrorServer(res, 500, error.message);
   }
 }
 
@@ -60,15 +48,9 @@ export async function getInventary(req, res){
     const inventaryR = AppDataSource.getRepository(InventarySchema);
     const inventary = await inventaryR.find();
 
-    return res.status(200).json({
-      message: "Productos obtenidos",
-      data: inventary
-    });
+    return handleSuccess(res, 200, "Lista de productos obtenida correctamente", inventary);
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al obtener los productos",
-      error: error.message
-    });
+    return handleErrorServer(res, 500, error.message);
   }
 }
 
@@ -79,20 +61,12 @@ export async function getInventaryById(req, res){
     const inventary = await inventaryR.findOne({ where: { nombre: req.params.nombre } });
 
     if(!inventary){
-      return res.status(404).json({
-        message: "Producto no encontrado"
-      });
+      return handleErrorServer(res, 500, "El producto no existe");
     }
 
-    return res.status(200).json({
-      message: "Producto obtenido",
-      data: inventary
-    });
+    return handleSuccess(res, 200, "Producto obtenido correctamente", inventary);
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al obtener el producto",
-      error: error.message
-    });
+    return handleErrorServer(res, 500, error.message);
   }
 }
 
@@ -103,23 +77,17 @@ export async function updateInventary(req, res){
     const inventary = req.body;
 
     if(!inventary.nombre || !inventary.precio || !inventary.stock){
-      return res.status(400).json({
-        message: "Datos incompletos"
-      });
+      return handleErrorClient(res, 404, "Datos incompletos",inventary);
     }
 
     const inventaryExist = await inventaryR.findOne({ where: { idProducto: inventary.idProducto } });
     if(!inventaryExist){
-      return res.status(404).json({
-        message: "Producto no encontrado"
-      });
+      return handleErrorServer(res, 500, "El producto no existe");
     }
 
     // el nombre, el precio mayor que 0, el stock mayor que 0
     if(inventary.nombre.length < 3 || inventary.precio < 1 || inventary.stock < 1){
-      return res.status(400).json({
-        message: "Datos incorrectos"
-      });
+      return handleErrorClient(res, 404, "Los datos ingresados no cumplen los requisitos",inventary);
     }
 
     inventaryExist.nombre = inventary.nombre;
@@ -128,15 +96,9 @@ export async function updateInventary(req, res){
 
     const inventaryUpdated = await inventaryR.save(inventaryExist);
 
-    return res.status(200).json({
-      message: "Producto actualizado",
-      data: inventaryUpdated
-    });
+    return handleSuccess(res, 200, "Producto actualizado correctamente", inventaryUpdated);
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al actualizar el producto",
-      error: error.message
-    });
+    return handleErrorServer(res, 500, error.message);
   }
 }
 
@@ -147,22 +109,15 @@ export async function deleteInventary(req, res){
     const inventary = await inventaryR.findOne({ where: { idProducto: req.params.idProducto } });
     
     if(!inventary){
-      return res.status(404).json({
-        message: "Producto no encontrado"
-      });
+      return handleErrorServer(res, 500, "El producto no existe");
     }
 
     await inventaryR.remove(inventary);
 
-    return res.status(200).json({
-      message: "Producto eliminado"
-    });
+    return handleSuccess(res, 200, "Producto eliminado correctamente", inventaryUpdated);
 
     ;
   } catch (error) {
-    return res.status(500).json({
-      message: "Error al obtener el producto",
-      error: error.message
-    });
+    return handleErrorServer(res, 500, error.message);
   }
 }

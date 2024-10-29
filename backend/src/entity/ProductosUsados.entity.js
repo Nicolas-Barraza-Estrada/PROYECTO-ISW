@@ -1,6 +1,6 @@
 //esquema ProductosUsados
 /*
-*id_ordenT (PK FK)
+*n_orden (PK FK)
 *idProducto (FK)
 Cantidad
 */

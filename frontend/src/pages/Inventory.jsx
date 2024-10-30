@@ -1,5 +1,4 @@
 import Table from "@components/Table";
-import useInventory from "@hooks/Inventory/useGetInventory.jsx";
 import Search from "../components/Search";
 import PopupInv from "../components/PopupInventario";
 import AddPopupInv from "../components/AddPopUpInv.jsx";
@@ -7,8 +6,9 @@ import UpdateIcon from "../assets/updateIcon.svg";
 import UpdateIconDisable from "../assets/updateIconDisabled.svg";
 import { useCallback, useState } from "react";
 import "@styles/inventory.css";
-import useEditInventory from "@hooks/Inventory/useEditInventory.jsx";
-import useAddInventory from "@hooks/Inventory/useAddInventory.jsx";
+import useEditInventory from "../hooks/inventory/useEditInventory.jsx"
+import useAddInventory from "../hooks/inventory/useAddInventory.jsx";
+import useInventory from "../hooks/inventory/useGetInventory.jsx";
 
 const Inventory = () => {
   const { inventory, setInventory } = useInventory();

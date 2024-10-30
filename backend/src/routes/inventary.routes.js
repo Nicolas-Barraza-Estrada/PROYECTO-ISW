@@ -8,7 +8,7 @@ import {
     getInventary,
     getInventaryById,
     updateInventary
-} from "../controllers/inventary.controller.js";
+} from "../controllers/inventory.controller.js";
 
 const router = Router();
 

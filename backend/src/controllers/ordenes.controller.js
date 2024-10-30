@@ -12,7 +12,7 @@ export async function createOrdenes(req, res) {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
         const ordenes = req.body;
         
-        // Validar que los campos requeridos no estén vacíos 
+        // Valida que los campos requeridos no estén vacíos 
         if (!ordenes.rut_Trabajador || !ordenes.n_orden || !ordenes.nombreCliente 
             || !ordenes.fono_cliente || !ordenes.email_cliente || !ordenes.descripcion 
             || !ordenes.estado) {
@@ -25,13 +25,14 @@ export async function createOrdenes(req, res) {
         const user = await userR.findOneBy({ rut: ordenes.rut_Trabajador });
         if (!user) {
         console.log("El rut del trabajador no está registrado");
-        return handleErrorServer(res, 500, "El rut del trabajador no está registrado")};
+        return handleErrorClient(res, 404, "El rut del trabajador no está registrado",ordenes);
+        }
         
         // n° orden es unico
         const ordenesExiste = await ordenesR.findOneBy({ n_orden: ordenes.n_orden });
         if (ordenesExiste) {
             console.log("El numero de orden ya está registrado");
-            return handleErrorServer(res, 500, "El numero de orden ya está registrado")
+            return handleErrorClient(res, 404, "El numero de orden ya está registrado",ordenes);
         };
         
         const newOrdenes = ordenesR.create({
@@ -59,7 +60,7 @@ export async function getOrdenes(req, res) {
         const ordenes = await ordenesR.find();
         console.log(ordenes)
         if (!ordenes) {
-            return handleErrorServer(res, 500, "NO existen ordenes de trabajo");
+            return handleErrorServer(res, 500, "No se pudo obtener las ordenes de trabajo");
         }
 
         return handleSuccess(res, 200, "Lista de ordenes", ordenes);
@@ -103,7 +104,7 @@ export async function updateOrden(req, res) {
         )
         console.log(ordenExist)
         if (!ordenExist) {
-            return handleErrorServer(res, 500, "No existe la orden de trabajo");
+            return handleErrorClient(res, 404, "No existe la orden de trabajo",ordenes);
         }
         
         ordenExist.descripcion = ordenes.descripcion;
@@ -115,5 +116,6 @@ export async function updateOrden(req, res) {
 
     } catch (error) {
         return handleErrorServer(res, 500, error.message);
+        
     }
 }

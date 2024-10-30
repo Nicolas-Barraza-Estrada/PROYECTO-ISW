@@ -5,6 +5,7 @@ import authRoutes from "./auth.routes.js";
 import inventaryRouter from "./inventary.routes.js";
 import ordenesRoutes from "./ordenes.routes.js";
 import productosUsadosRoutes from "./productosUsados.routes.js";
+import reservaRoutes from "./reserva.routes.js";
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router
     .use("/user", userRoutes)
     .use("/inventory", inventaryRouter)
     .use("/ordenes", ordenesRoutes)
-    .use("/productosUsados", productosUsadosRoutes);
+    .use("/productosUsados", productosUsadosRoutes)
+    .use("/reserva", reservaRoutes);
 
 export default router;

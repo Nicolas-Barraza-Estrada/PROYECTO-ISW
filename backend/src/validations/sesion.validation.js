@@ -52,8 +52,8 @@ export const sesionBodyValidation = Joi.object({
       }
 
       return value; // Si la fecha es válida y cumple la condición, devolverla
-    }),
-  
+    })
 }).messages({
   "object.unknown": "No se permiten propiedades adicionales."
-});
+})
+  .unknown(false);

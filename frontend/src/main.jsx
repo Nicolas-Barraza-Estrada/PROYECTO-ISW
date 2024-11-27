@@ -12,7 +12,6 @@ import '@styles/styles.css';
 import Inventory from './pages/Inventory';
 import Sesion from './pages/Sesion';
 
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -29,8 +28,6 @@ const router = createBrowserRouter([
           <ProtectedRoute allowedRoles={['administrador']}>
             <Users />
           </ProtectedRoute>
-
-        ),
         )
       },
       {
@@ -45,7 +42,6 @@ const router = createBrowserRouter([
         path: '/inventory',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
-
             <Inventory />
           </ProtectedRoute>
         ),
@@ -83,13 +79,3 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 );
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
-);
-
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
-)
-

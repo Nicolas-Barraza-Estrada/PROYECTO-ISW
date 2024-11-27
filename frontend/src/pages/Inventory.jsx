@@ -52,11 +52,7 @@ const Inventory = () => {
     <div className="main-container">
       <div className="table-container">
         <div className="top-table">
-<<<<<<< HEAD
           <h1 className="title-table">Inventory</h1>
-=======
-          <h1 className="title-table">Inventario</h1>
->>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
           <div className="filter-actions">
             <button
               onClick={handleClickUpdate}

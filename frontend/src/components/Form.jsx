@@ -48,6 +48,7 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                                 field.type === 'password' && field.name === 'newPassword' ? (showNewPassword ? 'text' : 'password') :
                                 field.type}
                             defaultValue={field.defaultValue || ''}
+                            readOnly={field.readOnly || false} // Añade esta línea para manejar campos de solo lectura
                             disabled={field.disabled}
                             onChange={field.onChange}
                         />
@@ -64,6 +65,7 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                             name={field.name}
                             placeholder={field.placeholder}
                             defaultValue={field.defaultValue || ''}
+                            readOnly={field.readOnly || false} // Asegura que también funcione en textareas
                             disabled={field.disabled}
                             onChange={field.onChange}
                         />

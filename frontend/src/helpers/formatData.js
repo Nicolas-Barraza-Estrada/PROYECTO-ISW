@@ -21,6 +21,41 @@ export function convertirMinusculas(obj) {
     }
     return obj;
 }
+export function formatOrdenData(orden) 
+{   
+    return {
+        rut_Trabajador: formatRut(orden.rut_Trabajador),
+        n_orden: orden.n_orden,
+        nombreCliente: startCase(orden.nombreCliente),
+        fono_cliente: orden.fono_cliente,
+        email_cliente: orden.email_cliente,
+        descripcion: orden.descripcion,
+        estado: startCase(orden.estado),
+        costo: orden.costo
+    };
+    
+}
+
+
+export function formatInventoryData(inventory) {
+    return {
+        ...inventory,
+        nombreProducto: startCase(inventory.nombreProducto),
+        stock: (inventory.stock),
+        precio: formatCurrency(inventory.precio), // Formatting price
+        createdAt: formatTempo(inventory.createdAt, "DD-MM-YYYY"),
+        updatedAt: formatTempo(inventory.updatedAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatCurrency(value) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'CLP', // Change this to your preferred currency code
+        minimumFractionDigits: 2, // Adjust this if needed
+        maximumFractionDigits: 2,
+    }).format(value);
+}
 
 export function formatInventoryData(inventory) {
     return {
@@ -52,6 +87,7 @@ export function formatPostUpdate(user) {
     };
 }
 
+<<<<<<< HEAD
 export function formatSesionData(sesion) {
     return {
         ...sesion,
@@ -62,3 +98,5 @@ export function formatSesionData(sesion) {
         updatedAt: formatTempo(sesion.updatedAt, "DD-MM-YYYY") 
     };
 }
+=======
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb

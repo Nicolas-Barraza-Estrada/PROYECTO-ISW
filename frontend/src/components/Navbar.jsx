@@ -71,6 +71,35 @@ const Navbar = () => {
                         </NavLink>
                     </li>)}
                     {userRole === 'administrador' && (
+                    <>
+                        <li>
+                            <NavLink 
+                                to="/ordenes" 
+                                onClick={() => { 
+                                    setMenuOpen(false); 
+                                    addActiveClass();
+                                }} 
+                                activeClassName="active"
+                            >
+                                Órdenes
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                to="/inventory" 
+                                onClick={() => { 
+                                    setMenuOpen(false); 
+                                    addActiveClass();
+                                }} 
+                                activeClassName="active"
+                            >
+                                Inventario
+                            </NavLink>
+                        </li>
+                    </>
+                )}
+
+                    {userRole === 'administrador' && (
                     <li>
                         <NavLink 
                             to="/users" 
@@ -111,6 +140,20 @@ const Navbar = () => {
                             Cerrar sesión
                         </NavLink>
                     </li>
+                    {userRole === "administrador" && (
+                        <li>
+                            <NavLink
+                                to="/asistencia"
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    addActiveClass();
+                                }}
+                                activeClassName="active"
+                            >
+                                Asistencias
+                            </NavLink>
+                        </li>
+                    )}
                 </ul>
             </div>
             <div className="hamburger" onClick={toggleMenu}>

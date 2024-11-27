@@ -1,6 +1,7 @@
 "use strict";
 import Joi from "joi";
 
+<<<<<<< HEAD
 // Función personalizada para validar la fecha en formato dd-mm-aaaa
 const dateFormat = (value, helpers) => {
   // Expresión regular para validar dd-mm-aaaa
@@ -22,6 +23,8 @@ const dateFormat = (value, helpers) => {
   return formattedDate; // Devolver la fecha en formato YYYY-MM-DD
 };
 
+=======
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
 // Validación del cuerpo (body) de la solicitud para crear o actualizar una sesión
 export const sesionBodyValidation = Joi.object({
   disponibilidad: Joi.boolean()
@@ -30,6 +33,7 @@ export const sesionBodyValidation = Joi.object({
       "boolean.base": "La disponibilidad debe ser de tipo booleano.",
       "any.required": "La disponibilidad es un campo obligatorio.",
     }),
+<<<<<<< HEAD
 
   // Validación de la fecha con formato personalizado
   fecha: Joi.string()
@@ -53,8 +57,25 @@ export const sesionBodyValidation = Joi.object({
 
       return value; // Si la fecha es válida y cumple la condición, devolverla
     })
+=======
+  fecha: Joi.date()
+    .iso()
+    .greater('now')
+    .required()
+    .messages({
+      "date.base": "La fecha debe ser de tipo fecha.",
+      "date.iso": "La fecha debe estar en formato YYYY-MM-DD.",
+      'date.greater': 'La fecha debe ser igual o posterior a la fecha actual.',
+      "any.required": "La fecha es un campo obligatorio.",
+    })
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
 })
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
+<<<<<<< HEAD
   });
+=======
+  });
+
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb

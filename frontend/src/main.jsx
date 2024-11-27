@@ -1,3 +1,4 @@
+import Ordenes from '@pages/Ordenes';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
@@ -9,7 +10,10 @@ import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Inventory from './pages/Inventory';
+<<<<<<< HEAD
 import Sesion from './pages/Sesion';
+=======
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
 
 const router = createBrowserRouter([
   {
@@ -27,7 +31,19 @@ const router = createBrowserRouter([
           <ProtectedRoute allowedRoles={['administrador']}>
             <Users />
           </ProtectedRoute>
+<<<<<<< HEAD
         ),
+=======
+        )
+      },
+      {
+        path: '/ordenes',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Ordenes />
+          </ProtectedRoute>
+        )
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
       },
       {
         path: '/inventory',
@@ -35,6 +51,7 @@ const router = createBrowserRouter([
           <ProtectedRoute allowedRoles={['administrador']}>
             <Inventory />
           </ProtectedRoute>
+<<<<<<< HEAD
         ),
       },
       {
@@ -43,6 +60,8 @@ const router = createBrowserRouter([
           <ProtectedRoute allowedRoles={['administrador']}>
             <Sesion />
           </ProtectedRoute>
+=======
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
         )
       }
     ]
@@ -56,7 +75,15 @@ const router = createBrowserRouter([
     element: <Register />
   }
 ]);
+<<<<<<< HEAD
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 );
+=======
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <RouterProvider router={router}/>
+)
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb

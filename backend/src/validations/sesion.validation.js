@@ -21,7 +21,6 @@ const dateFormat = (value, helpers) => {
 
   return formattedDate; // Devolver la fecha en formato YYYY-MM-DD
 };
-
 // Validación del cuerpo (body) de la solicitud para crear o actualizar una sesión
 export const sesionBodyValidation = Joi.object({
   disponibilidad: Joi.boolean()
@@ -52,8 +51,37 @@ export const sesionBodyValidation = Joi.object({
       }
 
       return value; // Si la fecha es válida y cumple la condición, devolverla
+    })
+
+  fecha: Joi.date()
+    .iso()
+    .greater('now')
+    .required()
+    .messages({
+      "string.base": "La fecha debe ser una cadena de texto.",
+      "date.format": "La fecha debe estar en formato dd-mm-aaaa.",
+      "date.invalid": "La fecha es inválida.",
+      "any.required": "La fecha es un campo obligatorio.",
+    })
+    .custom((value, helpers) => {
+      // Convertir la fecha de formato dd-mm-aaaa a un objeto Date para la comparación
+      const date = new Date(value);
+      const now = new Date();
+      
+      // Comprobar que la fecha es mayor o igual a la actual
+      if (date < now) {
+        return helpers.error("date.greater", { message: "La fecha debe ser igual o posterior a la fecha actual." });
+      }
+
+      return value; // Si la fecha es válida y cumple la condición, devolverla
     }),
   
 }).messages({
   "object.unknown": "No se permiten propiedades adicionales."
 });
+
+})
+  .unknown(false)
+  .messages({
+    "object.unknown": "No se permiten propiedades adicionales.",
+

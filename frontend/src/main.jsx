@@ -10,10 +10,8 @@ import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Inventory from './pages/Inventory';
-<<<<<<< HEAD
 import Sesion from './pages/Sesion';
-=======
->>>>>>> b9eedb38bc5442afd7e96d483e4fa936d76e4ecd
+
 
 const router = createBrowserRouter([
   {
@@ -31,13 +29,23 @@ const router = createBrowserRouter([
           <ProtectedRoute allowedRoles={['administrador']}>
             <Users />
           </ProtectedRoute>
+
         ),
+        )
+      },
+      {
+        path: '/ordenes',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Ordenes />
+          </ProtectedRoute>
+        )
       },
       {
         path: '/inventory',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
-<<<<<<< HEAD
+
             <Inventory />
           </ProtectedRoute>
         ),
@@ -47,9 +55,16 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Sesion />
-=======
             <Inventory/>
->>>>>>> b9eedb38bc5442afd7e96d483e4fa936d76e4ecd
+            <Inventory />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/sesion', // Ruta para la página de Sesión
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Sesion />
           </ProtectedRoute>
         )
       }
@@ -68,3 +83,13 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 );
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <RouterProvider router={router} />
+);
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <RouterProvider router={router}/>
+)
+

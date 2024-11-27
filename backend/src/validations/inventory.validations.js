@@ -47,6 +47,14 @@ export const inventaryBodyValidation = Joi.object({
         "number.integer": "El stock debe ser un número entero.",
         "number.positive": "El stock debe ser un número positivo.",
         }),
+        precio: Joi.number()
+        .integer()
+        .min(0)
+        .required()
+        .messages({
+        "number.base": "El precio debe ser un número.",
+        "number.min": "El precio no puede ser negativo."
+        }),
     })
     .unknown(false)
     .messages({

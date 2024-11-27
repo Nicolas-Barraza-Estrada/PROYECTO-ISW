@@ -4,7 +4,9 @@ import { isAdmin } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createInventary,
+    deleteInventary,
     getInventary,
+    getInventaryById,
     updateInventary
 } from "../controllers/inventory.controller.js";
 
@@ -15,8 +17,12 @@ router
     .use(isAdmin);
 
 router
-    .post("/", createInventary)
-    .get("/", getInventary)
-    .put("/", updateInventary)
+//    .get("/", getInventaries,)
+//    .get("/detail/", getInventary)
+    .post("/crear/", createInventary)
+    .get("/listar/", getInventary)
+    .get("/listarBy/:nombre", getInventaryById)
+    .put("/actualizar/", updateInventary)
+    .delete("/eliminar/:id", deleteInventary);
 
 export default router;

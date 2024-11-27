@@ -20,6 +20,21 @@ export function convertirMinusculas(obj) {
     }
     return obj;
 }
+export function formatOrdenData(orden) 
+{   
+    return {
+        rut_Trabajador: formatRut(orden.rut_Trabajador),
+        n_orden: orden.n_orden,
+        nombreCliente: startCase(orden.nombreCliente),
+        fono_cliente: orden.fono_cliente,
+        email_cliente: orden.email_cliente,
+        descripcion: orden.descripcion,
+        estado: startCase(orden.estado),
+        costo: orden.costo
+    };
+    
+}
+
 
 export function formatPostUpdate(user) {
     return {

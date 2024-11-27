@@ -10,6 +10,7 @@ import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Inventory from './pages/Inventory';
+import Asistencia from './pages/asistencia';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,16 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Inventory />
+        <ProtectedRoute allowedRoles={['administrador']}>
+          <Users />
+        </ProtectedRoute>
+        ),
+    }, 
+     {
+        path: '/asistencia',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Asistencia/>
           </ProtectedRoute>
         )
       }

@@ -1,0 +1,151 @@
+/* styles/asistencia.css */
+
+/* Contenedor principal */
+.main-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1200px;
+  }
+  
+  /* Título principal */
+  .title-table {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Estilos para la tabla */
+  .table-container {
+    margin-top: 20px;
+  }
+  
+  .top-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  .add-asistencia-button {
+    background-color: #28a745;
+    font-size: 1.5rem;
+    padding: 12px 15px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .add-asistencia-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Estilo de los popups */
+  .popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .popup-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .popup-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Estilos para los inputs */
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .search-input {
+    width: 200px;
+    margin-right: 20px;
+  }
+  
+  .search-input:focus {
+    border-color: #28a745;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+  
+    .filter-actions {
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    .add-asistencia-button {
+      font-size: 1.2rem;
+      padding: 10px;
+    }
+  }
+  

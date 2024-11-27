@@ -113,6 +113,20 @@ const Navbar = () => {
                             Cerrar sesión
                         </NavLink>
                     </li>
+                    {userRole === "administrador" && (
+                        <li>
+                            <NavLink
+                                to="/asistencia"
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    addActiveClass();
+                                }}
+                                activeClassName="active"
+                            >
+                                Asistencias
+                            </NavLink>
+                        </li>
+                    )}
                 </ul>
             </div>
             <div className="hamburger" onClick={toggleMenu}>

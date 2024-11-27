@@ -36,6 +36,26 @@ export function formatOrdenData(orden)
 }
 
 
+export function formatInventoryData(inventory) {
+    return {
+        ...inventory,
+        nombreProducto: startCase(inventory.nombreProducto),
+        stock: (inventory.stock),
+        precio: formatCurrency(inventory.precio), // Formatting price
+        createdAt: formatTempo(inventory.createdAt, "DD-MM-YYYY"),
+        updatedAt: formatTempo(inventory.updatedAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatCurrency(value) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'CLP', // Change this to your preferred currency code
+        minimumFractionDigits: 2, // Adjust this if needed
+        maximumFractionDigits: 2,
+    }).format(value);
+}
+
 export function formatPostUpdate(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),

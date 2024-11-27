@@ -126,21 +126,4 @@ import {
             return handleErrorServer(res, 500, error.message);
         }
     }
-
-
-    export async function getProductsUsed(req, res) {
-        // recibe n_orden y retorna los productos usados en esa orden
-        try {
-            const productosUsadosR = AppDataSource.getRepository(ProductosUsadosSchema);
-            const n_orden = req.params.n_orden;
-            const productosUsados = await productosUsadosR.findBy({ n_orden: n_orden });
-            if (!productosUsados) {
-                return handleErrorClient(res, 404, "No se encontraron productos usados para la orden",productosUsados);
-            }
-            return handleSuccess(res, 200, "Productos usados encontrados", productosUsados);
-        } catch (error) {
-            return handleErrorServer(res, 500, error.message
-            );
-
-    }
-}
+    

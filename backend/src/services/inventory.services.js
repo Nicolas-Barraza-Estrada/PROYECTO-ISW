@@ -71,7 +71,7 @@ export async function createInventaryService(body) {
         const inventaryRepository = AppDataSource.getRepository(Inventary);
     
         const existingInventary = await inventaryRepository.findOne({
-        where: [{ nombre: body.nombre }],
+        where: [{ name: body.name }],
         });
     
         if (existingInventary) return [null, "Ya existe un Artículo con ese nombre"];

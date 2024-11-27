@@ -7,12 +7,18 @@ import {
   import InventarySchema from "../entity/inventary.entity.js";
   import OrdenesSchema from "../entity/ordenes.entity.js";
   import { AppDataSource } from "../config/configDb.js";
-
+  import { createProductoUsadoValidation } from "../validations/productosUsados.validation.js";
+  import { updateProductoUsadoValidation } from "../validations/productosUsados.validation.js";
     export async function createProductosUsados(req, res) {
         try {
             const productosUsadosR = AppDataSource.getRepository(ProductosUsadosSchema);
             const productosUsados = req.body;
             
+            const { error } = createProductoUsadoValidation.validate(productosUsados);
+            if (error) {
+                return handleErrorClient(res, 404, error.details[0].message,productosUsados);
+            }
+
             console.log(productosUsados)
             // Valida que los campos requeridos no estén vacíos 
             if (!productosUsados.n_orden || !productosUsados.idProducto || !productosUsados.cantidad) {
@@ -75,6 +81,11 @@ import {
         try {
             const productosUsadosR = AppDataSource.getRepository(ProductosUsadosSchema);
             const productosUsados = req.body;
+
+            const { error } = updateProductoUsadoValidation.validate(productosUsados);
+            if (error) {
+                return handleErrorClient(res, 404, error.details[0].message,productosUsados);
+            }
     
             // Valida que los campos requeridos no estén vacíos 
             if (!productosUsados.n_orden || !productosUsados.idProducto || !productosUsados.cantidad) {

@@ -8,7 +8,13 @@ import UserSchema from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { createOrdenesValidation } from "../validations/ordenes.validation.js";
 import { updateOrdenesValidation } from "../validations/ordenes.validation.js";
-
+import {
+    createOrdenesService,
+    getOrdenesService,
+    getOrdenService,
+    updateOrdenService,
+  } from "../services/ordenes.services.js";
+  
 export async function createOrdenes(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
@@ -19,6 +25,9 @@ export async function createOrdenes(req, res) {
         if (error) {
             return handleErrorClient(res, 404, error.details[0].message, ordenes);
         }
+        
+        //const [result, errorService] = await createOrdenesService(req.body);
+        //if (error) return handleErrorClient(res, 404, errorService, req.body);
 
         // Valida que los campos requeridos no estén vacíos 
         if (!ordenes.rut_Trabajador || !ordenes.n_orden || !ordenes.nombreCliente 

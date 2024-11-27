@@ -4,6 +4,7 @@ import { isAdmin } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createProductosUsados,
+    getProductsUsed,
     updateProductosUsados
 } from "../controllers/productosUsados.controller.js";
 
@@ -15,6 +16,7 @@ router
 
 router
     .post("/crear/", createProductosUsados)
-    .put("/actualizar/", updateProductosUsados);
+    .put("/actualizar/", updateProductosUsados)
+    .get("/listar/:n_orden", getProductsUsed);
 
 export default router;

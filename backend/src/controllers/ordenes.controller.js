@@ -6,12 +6,20 @@ import {
 import OrdenesSchema from "../entity/ordenes.entity.js";
 import UserSchema from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { createOrdenesValidation } from "../validations/ordenes.validation.js";
+import { updateOrdenesValidation } from "../validations/ordenes.validation.js";
 
 export async function createOrdenes(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
         const ordenes = req.body;
-        
+
+        const { error } = createOrdenesValidation.validate(ordenes);
+
+        if (error) {
+            return handleErrorClient(res, 404, error.details[0].message, ordenes);
+        }
+
         // Valida que los campos requeridos no estén vacíos 
         if (!ordenes.rut_Trabajador || !ordenes.n_orden || !ordenes.nombreCliente 
             || !ordenes.fono_cliente || !ordenes.email_cliente || !ordenes.descripcion 
@@ -91,7 +99,12 @@ export async function updateOrden(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
         const ordenes = req.body;
+
+        const { error } = updateOrdenesValidation.validate(ordenes);
         
+        if (error) {
+            return handleErrorClient(res, 404, error.details[0].message, ordenes);
+        }
         //validar que todos los campos existan
         if ( !ordenes.n_orden || !ordenes.descripcion || !ordenes.estado || !ordenes.costo) {
             return handleErrorClient(res, 404, "Datos incompletos",ordenes);

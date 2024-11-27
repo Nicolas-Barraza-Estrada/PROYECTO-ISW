@@ -30,3 +30,13 @@ export function formatPostUpdate(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
+
+export function formatAsistenciaData(asistencia) {
+    return {
+        id_asistencia: asistencia.id_asistencia,
+        idUsuario: asistencia.idUsuario,
+        fecha: asistencia.fecha,
+        hora_entrada: asistencia.hora_entrada,
+        hora_salida: asistencia.hora_salida,
+    };
+}

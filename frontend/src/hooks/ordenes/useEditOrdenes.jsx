@@ -1,45 +1,64 @@
-import { useState } from 'react';
-import { updateOrdenes } from  '@services/ordenes.service.js';
-import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatInventoryData } from '@helpers/formatData.js';
-const UseUpdateOrdenes = (setInventory) => {
-    const [isPopupInvOpen, setIsPopupInvOpen] = useState(false);
-    const [dataInventory, setDataInventory] = useState([]);
-    
+import { useState } from "react";
+import { updateOrdenes } from "@services/ordenes.service.js";
+import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert.js";
+import { formatOrdenData } from "@helpers/formatData.js";
+
+const useEditOrdenes = (setOrdenes) => {
+    const [isPopupOrdOpen, setIsPopupOrdOpen] = useState(false); // Estado para mostrar el popup
+    const [dataOrden, setDataOrden] = useState([]); // Datos de la orden seleccionada
+
+    // Maneja el evento de clic en el botón de editar
     const handleClickUpdate = () => {
-        if (dataInventory.length > 0) {
-            setIsPopupInvOpen(true);
+        if (dataOrden.length > 0) {
+            setIsPopupOrdOpen(true); // Muestra el popup
         }
     };
-    const handleUpdate = async (updatedInventoryData) => {
-        if (updatedInventoryData) {
+
+    // Maneja la actualización de la orden
+    const handleUpdate = async (updatedOrdenData) => {
+        if (updatedOrdenData) {
             try {
-                const updatedInventory = await updateOrdenes(updatedInventoryData, dataInventory[0].idProducto);
-                showSuccessAlert('¡Actualizado!', 'El Inventario ha sido actualizado correctamente.');
-                setIsPopupInvOpen(false);
-    
-                const formattedInventory = formatInventoryData(updatedInventory);
-                setInventory(prevInventorys => 
-                    prevInventorys.map(inventory => 
-                        inventory.idProducto === formattedInventory.idProducto ? formattedInventory : inventory
+                const updatedOrden = await updateOrdenes(
+                    updatedOrdenData,
+                    dataOrden[0].idOrden
+                ); // Actualiza la orden en el backend
+                showSuccessAlert(
+                    "¡Actualizado!",
+                    "La orden ha sido actualizada correctamente."
+                );
+                setIsPopupOrdOpen(false); // Cierra el popup
+
+                // Formatea los datos actualizados
+                const formattedOrden = formatOrdenData(updatedOrden);
+
+                // Actualiza el estado de las órdenes en la lista
+                setOrdenes((prevOrdenes) =>
+                    prevOrdenes.map((orden) =>
+                        orden.n_orden === formattedOrden.n_orden
+                            ? formattedOrden
+                            : orden
                     )
                 );
-    
-                setDataInventory([]);
+
+                setDataOrden([]); // Limpia los datos seleccionados
             } catch (error) {
-                console.error('Error al actualizar el usuario:', error);
-                showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el usuario.');
+                console.error("Error al actualizar la orden:", error);
+                showErrorAlert(
+                    "Cancelado",
+                    "Ocurrió un error al actualizar la orden."
+                );
             }
         }
     };
-    
+
     return {
         handleClickUpdate,
         handleUpdate,
-        isPopupInvOpen,
-        setIsPopupInvOpen,
-        dataInventory,
-        setDataInventory
+        isPopupOrdOpen,
+        setIsPopupOrdOpen,
+        dataOrden,
+        setDataOrden,
     };
 };
-export default UseUpdateOrdenes;
+
+export default useEditOrdenes;

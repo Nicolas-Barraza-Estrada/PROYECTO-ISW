@@ -1,3 +1,4 @@
+import Ordenes from '@pages/Ordenes';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
@@ -26,6 +27,17 @@ const router = createBrowserRouter([
         <ProtectedRoute allowedRoles={['administrador']}>
           <Users />
         </ProtectedRoute>
+        ),    
+    },
+    {
+      path: '/ordenes',
+      element: (
+      <ProtectedRoute allowedRoles={['administrador']}> 
+        <Ordenes />
+      </ProtectedRoute>
+      ),
+    }
+
         ),
       },
       {

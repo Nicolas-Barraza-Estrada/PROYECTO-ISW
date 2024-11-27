@@ -58,6 +58,18 @@ const Navbar = () => {
                             Inicio
                         </NavLink>
                     </li>
+                    {userRole === 'administrador' && (<li>
+                        <NavLink 
+                            to="/inventory" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Inventario
+                        </NavLink>
+                    </li>)}
                     {userRole === 'administrador' && (
                     <>
                         <li>
@@ -98,6 +110,21 @@ const Navbar = () => {
                             activeClassName="active"
                         >
                             Usuarios
+                        </NavLink>
+                    </li>
+                    )}
+                    {/* Nuevo enlace para la página de Sesiones */}
+                    {userRole === 'administrador' && (
+                    <li>
+                        <NavLink 
+                            to="/sesion" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Sesiones
                         </NavLink>
                     </li>
                     )}

@@ -2,6 +2,7 @@ import { startCase } from 'lodash';
 import { format as formatRut } from 'rut.js';
 import { format as formatTempo } from "@formkit/tempo";
 
+
 export function formatUserData(user) {
     return {
         ...user,
@@ -56,6 +57,8 @@ export function formatCurrency(value) {
     }).format(value);
 }
 
+
+
 export function formatPostUpdate(user) {
     return {
         nombreCompleto: startCase(user.nombreCompleto),
@@ -63,6 +66,17 @@ export function formatPostUpdate(user) {
         rut: formatRut(user.rut),
         email: user.email,
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatSesionData(sesion) {
+    return {
+        ...sesion,
+        id_sesion: (sesion.id_sesion), 
+        disponibilidad: startCase(sesion.disponibilidad), 
+        fecha: formatTempo(sesion.fecha, "DD-MM-YYYY"), 
+        createdAt: formatTempo(sesion.createdAt, "DD-MM-YYYY"), 
+        updatedAt: formatTempo(sesion.updatedAt, "DD-MM-YYYY") 
     };
 }
 

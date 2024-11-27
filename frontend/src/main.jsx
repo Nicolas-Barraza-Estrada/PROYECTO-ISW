@@ -10,6 +10,7 @@ import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Inventory from './pages/Inventory';
+import Sesion from './pages/Sesion';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,24 @@ const router = createBrowserRouter([
           <ProtectedRoute allowedRoles={['administrador']}>
             <Inventory />
           </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/sesion', // Ruta para la página de Sesión
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Sesion />
+            <Inventory/>
+            <Inventory />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/sesion', // Ruta para la página de Sesión
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Sesion />
+          </ProtectedRoute>
         )
       }
     ]
@@ -57,7 +76,6 @@ const router = createBrowserRouter([
   }
 ]);
 
-
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
-)
+  <RouterProvider router={router} />
+);

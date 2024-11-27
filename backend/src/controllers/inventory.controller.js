@@ -57,24 +57,6 @@ export async function getInventary(req, res){
   }
 }
 
-//obtener un producto por el nombre
-export async function getInventaryById(req, res){
-  try {
-    const inventaryR = AppDataSource.getRepository(InventarySchema);
-    
-    const inventary = await inventaryR.findOne({ where: { nombre: req.params.nombre } });
-    
-    if(!inventary){
-      return handleErrorClient(res, 400, "El producto no existe",inventaryR);
-    }
-
-    return handleSuccess(res, 200, "Producto obtenido correctamente", inventary);
-  } catch (error) {
-    return handleErrorServer(res, 500, error.message);
-  }
-}
-
-// update segun el id
 export async function updateInventary(req, res){
   try {
     const inventaryR = AppDataSource.getRepository(InventarySchema);
@@ -101,26 +83,6 @@ export async function updateInventary(req, res){
     const inventaryUpdated = await inventaryR.save(inventaryExist);
 
     return handleSuccess(res, 200, "Producto actualizado correctamente", inventaryUpdated);
-  } catch (error) {
-    return handleErrorServer(res, 500, error.message);
-  }
-}
-
-// eliminar segun el id
-export async function deleteInventary(req, res){
-  try {
-    const inventaryR = AppDataSource.getRepository(InventarySchema);
-    const inventary = await inventaryR.findOne({ where: { idProducto: req.params.idProducto } });
-    
-    if(!inventary){
-      return handleErrorClient(res, 404, "El producto no existe",inventaryR);
-    }
-
-    await inventaryR.remove(inventary);
-
-    return handleSuccess(res, 200, "Producto eliminado correctamente", inventary);
-
-    ;
   } catch (error) {
     return handleErrorServer(res, 500, error.message);
   }

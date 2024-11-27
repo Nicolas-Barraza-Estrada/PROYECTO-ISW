@@ -52,7 +52,7 @@ const Inventory = () => {
     <div className="main-container">
       <div className="table-container">
         <div className="top-table">
-          <h1 className="title-table">Inventory</h1>
+          <h1 className="title-table">Inventario</h1>
           <div className="filter-actions">
             <button
               onClick={handleClickUpdate}

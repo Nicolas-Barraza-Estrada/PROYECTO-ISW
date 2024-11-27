@@ -13,7 +13,7 @@ const InventarySchema = new EntitySchema({
         },
         nombre: {
         type: "varchar",
-        length: 255,
+        length: 50,
         nullable: false,
         },
         precio: {

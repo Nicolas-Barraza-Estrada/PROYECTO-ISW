@@ -29,7 +29,11 @@ export default function PopupInv({ show, setShow, data, action }) {
                                 fieldType: 'input',
                                 type: "text",
                                 required: true,
+<<<<<<< HEAD
                                 minLength: 15,
+=======
+                                minLength: 3,
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
                                 maxLength: 50,
                                 pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
                                 patternMessage: "Debe contener solo letras y espacios",
@@ -38,7 +42,11 @@ export default function PopupInv({ show, setShow, data, action }) {
                                 label: "Stock",
                                 name: "stock",
                                 defaultValue: inventoryData.stock || "",
+<<<<<<< HEAD
                                 placeholder: 'example@gmail.cl',
+=======
+                                placeholder: '5',
+>>>>>>> 08061d1ab962fa06bd9279496e351ebdda0ac7bb
                                 fieldType: 'input',
                                 type: "number",
                                 required: true

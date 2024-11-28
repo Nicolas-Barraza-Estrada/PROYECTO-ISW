@@ -51,16 +51,6 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Sesion />
-            <Inventory/>
-            <Inventory />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: '/sesion', // Ruta para la página de Sesión
-        element: (
-          <ProtectedRoute allowedRoles={['administrador']}>
-            <Sesion />
           </ProtectedRoute>
         )
       }

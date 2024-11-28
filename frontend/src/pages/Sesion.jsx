@@ -11,7 +11,7 @@ import "@styles/sesion.css";
 import useEditSesion from "../hooks/sesion/useEditSesion.jsx";
 import useAddSesion from "../hooks/sesion/useAddSesion.jsx";
 import useGetSesion from "../hooks/sesion/useGetSesiones.jsx";
-import useDeleteSesion from "../hooks/sesion/useDeleteSesion"; // Hook para eliminar sesión
+import useDeleteSesion from "../hooks/sesion/useDeleteSesion";
 
 const Sesion = () => {
   const { sesiones, fetchSesiones, setSesiones } = useGetSesion();

@@ -71,7 +71,7 @@ const Ordenes = () => {
             <Search
               value={filterRut}
               onChange={handleRutFilterChange}
-              placeholder="Filtrar por Rut"
+              placeholder="Filtrar por n° orden"
             />
           </div>
         </div>
@@ -79,8 +79,8 @@ const Ordenes = () => {
           data={ordenes}
           columns={columns}
           filter={filterRut}
-          dataToFilter={'rut_Trabajador'}
-          initialSortName={'n_orden'}
+          dataToFilter={'n_orden'}
+          initialSortName={'rut_Trabajador'}
           onSelectionChange={handleSelectionChange}
         />
       </div>

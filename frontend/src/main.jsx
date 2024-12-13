@@ -36,10 +36,7 @@ const router = createBrowserRouter([
         <Ordenes />
       </ProtectedRoute>
       ),
-    }
-
-        ),
-      },
+    },
       {
         path: '/inventory',
         element: (

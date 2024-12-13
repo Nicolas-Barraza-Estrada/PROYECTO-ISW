@@ -41,7 +41,7 @@ export default function PopupOrd({ show, setShow, data, action }) {
                   fieldType: "input",
                   type: "text",
                   required: true,
-                  minLength: 5,
+                  minLength: 10,
                   maxLength: 200,
                 },
                 {

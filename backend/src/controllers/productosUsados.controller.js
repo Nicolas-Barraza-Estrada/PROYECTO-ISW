@@ -145,10 +145,24 @@ import {
             const productosUsadosR = AppDataSource.getRepository(ProductosUsadosSchema);
             const n_orden = req.params.n_orden;
             const productosUsados = await productosUsadosR.findBy({ n_orden: n_orden });
-            if (!productosUsados) {
-                return handleErrorClient(res, 404, "No se encontraron productos usados para la orden",productosUsados);
+            if (productosUsados.length === 0) {
+                return handleErrorClient(res, 404, "No hay productos usados en esta orden",productosUsados);
             }
-            return handleSuccess(res, 200, "Productos usados encontrados", productosUsados);
+            
+            const productosUsadosList = [];
+            for (let i = 0; i < productosUsados.length; i++) {
+                const inventaryR = AppDataSource.getRepository(InventarySchema);
+                const inventary = await inventaryR.findOneBy({ idProducto: productosUsados[i].idProducto });
+                productosUsadosList.push({
+                    n_orden: productosUsados[i].n_orden,
+                    idProducto: productosUsados[i].idProducto,
+                    nombre: inventary.nombre,
+                    cantidad: productosUsados[i].cantidad
+                });
+            }
+            return handleSuccess(res, 200, "Productos usados obtenidos correctamente", productosUsadosList);
+
+
         } catch (error) {
             return handleErrorServer(res, 500, error.message
             );

@@ -15,7 +15,7 @@ export async function getOrdenes() {
 // Crear nueva orden
 export async function addOrdenes(newItem) {
     try {
-        const response = await axios.post('/ordenes/crear', newItem);
+        const response = await axios.post('/ordenes/crear/', newItem);
         return response.data.data;
     } catch (error) {
         return error.response.data;

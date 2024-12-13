@@ -12,7 +12,7 @@ const useAddOrdenes = (setInventory) => {
     const handleAddItem = async (newItem) => {
         console.log("New Item Submitted:", newItem); 
         
-        if (!newItem.rut_Trabajador || !newItem.n_orden || !newItem.nombreCliente || !newItem.fono_cliente || !newItem.email_cliente || !newItem.descripcion || !newItem.estado || !newItem.costo) {
+        if (!newItem.rut_Trabajador  || !newItem.nombreCliente || !newItem.fono_cliente || !newItem.email_cliente || !newItem.descripcion || !newItem.estado) {
             showErrorAlert('Error', 'Por favor, rellene todos los campos.');
             return;
         }

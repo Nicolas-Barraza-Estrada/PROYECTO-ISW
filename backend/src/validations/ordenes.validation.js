@@ -13,16 +13,6 @@ const domainEmailValidator = (value, helper) => {
 
 // Validación para crear órdenes
 export const createOrdenesValidation = Joi.object({
-  n_orden: Joi.number()
-    .integer()
-    .positive()
-    .required()
-    .messages({
-      "number.base": "El número de orden debe ser un número.",
-      "number.integer": "El número de orden debe ser un número entero.",
-      "number.positive": "El número de orden debe ser un número positivo.",
-      "any.required": "El número de orden es obligatorio.",
-    }),
   rut_Trabajador: Joi.string()
     .min(9)
     .max(12)
@@ -96,14 +86,7 @@ export const createOrdenesValidation = Joi.object({
       "string.max": "El estado debe tener como máximo 20 caracteres.",
       "any.required": "El estado es obligatorio.",
     }),
-  costo: Joi.number()
-    .positive()
-    .required()
-    .messages({
-      "number.base": "El costo debe ser un número.",
-      "number.positive": "El costo debe ser un número positivo.",
-      "any.required": "El costo es obligatorio.",
-    }),
+
 }).unknown(false).messages({
   "object.unknown": "No se permiten propiedades adicionales.",
 });

@@ -15,7 +15,7 @@ import {
     updateOrdenService,
   } from "../services/ordenes.services.js";
   
-export async function createOrdenes(req, res) {
+  export async function createOrdenes(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
         const ordenes = req.body;
@@ -26,41 +26,38 @@ export async function createOrdenes(req, res) {
             return handleErrorClient(res, 404, error.details[0].message, ordenes);
         }
         
-        //const [result, errorService] = await createOrdenesService(req.body);
-        //if (error) return handleErrorClient(res, 404, errorService, req.body);
-
         // Valida que los campos requeridos no estén vacíos 
-        if (!ordenes.rut_Trabajador || !ordenes.n_orden || !ordenes.nombreCliente 
+        if (!ordenes.rut_Trabajador || !ordenes.nombreCliente 
             || !ordenes.fono_cliente || !ordenes.email_cliente || !ordenes.descripcion 
             || !ordenes.estado) {
-                return handleErrorClient(res, 404, "Datos incompletos",ordenes);
+                return handleErrorClient(res, 404, "Datos incompletos", ordenes);
         }
-        console.log(ordenes.rut_Trabajador)
 
-        // Valida que el rut_Trabajor este registrado en en esquema de la base de datos (user)
+        // Valida que el rut_Trabajador esté registrado en el esquema de la base de datos (user)
         const userR = AppDataSource.getRepository(UserSchema);
         const user = await userR.findOneBy({ rut: ordenes.rut_Trabajador });
         if (!user) {
-        console.log("El rut del trabajador no está registrado");
-        return handleErrorClient(res, 404, "El rut del trabajador no está registrado",ordenes);
+            return handleErrorClient(res, 404, "El rut del trabajador no está registrado", ordenes);
         }
         
-        // n° orden es unico
-        const ordenesExiste = await ordenesR.findOneBy({ n_orden: ordenes.n_orden });
-        if (ordenesExiste) {
-            console.log("El numero de orden ya está registrado");
-            return handleErrorClient(res, 404, "El numero de orden ya está registrado",ordenes);
-        };
-        
+        // Generar un nuevo número de orden automáticamente
+        const lastOrder = await ordenesR.find({
+            order: { n_orden: "DESC" },
+            take: 1,
+        });
+
+        const lastNOrden = lastOrder.length ? parseInt(lastOrder[0].n_orden, 10) : 0;
+        const newNOrden = lastNOrden + 1;
+
         const newOrdenes = ordenesR.create({
             rut_Trabajador: ordenes.rut_Trabajador,
-            n_orden: ordenes.n_orden,
+            n_orden: newNOrden.toString(), // Convertir a string si `n_orden` es varchar
             nombreCliente: ordenes.nombreCliente,
             fono_cliente: ordenes.fono_cliente,
             email_cliente: ordenes.email_cliente,
             descripcion: ordenes.descripcion,
             estado: ordenes.estado,
-            costo: ordenes.costo,
+            costo: 0,
         });
         
         const ordenesSaved = await ordenesR.save(newOrdenes); 
@@ -69,7 +66,8 @@ export async function createOrdenes(req, res) {
     } catch (error) {
         return handleErrorServer(res, 500, error.message);
     }
-    }
+}
+
 
 export async function getOrdenes(req, res) {
     try {
@@ -127,6 +125,10 @@ export async function updateOrden(req, res) {
         console.log(ordenExist)
         if (!ordenExist) {
             return handleErrorClient(res, 404, "No existe la orden de trabajo",ordenes);
+        }
+
+        if(ordenes.costos < 0){
+            return handleErrorClient(res, 404, "El costo no puede ser negativo",ordenes);
         }
         
         ordenExist.descripcion = ordenes.descripcion;

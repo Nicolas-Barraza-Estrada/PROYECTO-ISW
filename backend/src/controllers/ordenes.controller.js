@@ -40,16 +40,19 @@ import {
             return handleErrorClient(res, 404, "El rut del trabajador no está registrado", ordenes);
         }
         
-        // Generar un nuevo número de orden automáticamente
-        const lastOrder = await ordenesR.find({
-            order: { n_orden: "DESC" },
-            take: 1,
-        });
-
-        const lastNOrden = lastOrder.length ? parseInt(lastOrder[0].n_orden, 10) : 0;
-        const newNOrden = lastNOrden + 1;
-
-        const newOrdenes = ordenesR.create({
+        // cuenta todas las ordenes de trabajo y le suma 1 para el nuevo n_orden
+        const countOrdenes = await ordenesR.count();
+        let newNOrden = countOrdenes + 1;
+        // comprueba si el nuevo n_orden ya existe en un bucle hasta que no exista
+        while (1) {
+            const ordenExist = await ordenesR.findOneBy({ n_orden: newNOrden.toString() });
+            if (!ordenExist) {
+                break;
+            }
+            newNOrden += 1;
+        }
+        // crea la nueva orden de trabajo
+            const newOrdenes = ordenesR.create({
             rut_Trabajador: ordenes.rut_Trabajador,
             n_orden: newNOrden.toString(), // Convertir a string si `n_orden` es varchar
             nombreCliente: ordenes.nombreCliente,

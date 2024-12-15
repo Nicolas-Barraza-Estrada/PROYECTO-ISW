@@ -18,7 +18,8 @@ const useProductosUsados = (n_orden) => {
             const response = await getProductsUsed(n_orden); // Llama al servicio
             console.log("Raw response:", response); // Inspecciona la respuesta completa
             
-            // Accede a la lista dentro de response.data
+            // si response.data no indefinido
+            
             const formattedData = response.data.map((producto) => ({
                 n_orden: parseInt(producto.n_orden),
                 idProducto: producto.idProducto,

@@ -70,7 +70,16 @@ import {
             inventary.stock = inventary.stock - productosUsados.cantidad;
             await inventaryR.save(inventary);
 
-            return handleSuccess(res, 200, "Producto creado correctamente", productosUsadosSaved);
+            //retorna n_orden, idProducto, nombre del producto, cantidad y stock
+            const inventaryUpdated = await inventaryR.findOneBy({ idProducto: productosUsados.idProducto });
+            return handleSuccess(res, 200, "Producto usado creado correctamente", {
+                n_orden: productosUsados.n_orden,
+                idProducto: productosUsados.idProducto,
+                nombre: inventary.nombre,
+                cantidad: productosUsadosSaved.cantidad,
+                stock: inventaryUpdated.stock
+            });
+            
         } catch (error) {
             return handleErrorServer(res, 500, error.message);
         }
@@ -187,9 +196,7 @@ import {
             const n_orden = req.params.n_orden;
             const productosUsados = await productosUsadosR.findBy({ n_orden: n_orden });
             console.log(productosUsados);
-            if (productosUsados.length === 0) {
-                return handleErrorClient(res, 404, "No hay productos usados en esta orden",productosUsados);
-            }
+
             const inventaryR = AppDataSource.getRepository(InventarySchema);
             const inventary = await inventaryR.find();
             console.log(inventary);

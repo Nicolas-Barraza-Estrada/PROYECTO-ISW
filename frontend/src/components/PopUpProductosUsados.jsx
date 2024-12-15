@@ -24,7 +24,7 @@ export default function PopUpProductosUsados({ show, setShow, data, action }) {
               <img src={CloseIcon} alt="Cerrar" />
             </button>
             <Form
-              title="Editar Producto Usado"
+              title="Agregar Producto Usado"
               fields={[
                 {
                   label: "N° Orden",

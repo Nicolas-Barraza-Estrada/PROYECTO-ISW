@@ -5,14 +5,11 @@ import UpdateIcon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import { useCallback, useState } from 'react';
 import '@styles/productosUsados.css';
-import useEditOrdenes from '@hooks/ordenes/useEditOrdenes';
 import useEditProductosUsados from '../hooks/productosUsados/useEditProductosUsados';
-import useOrdenes from '../hooks/ordenes/useGetOrdenes';
 import useProductosUsados from '../hooks/productosUsados/useGetProductosUsados';
-import useAddOrdenes from '../hooks/ordenes/useAddOrdenes';
-import AddPopupOrd from '../components/addPopUpOrd';
-import PopupOrd from '../components/PopUpOrdenes';
 import PopupProductos from '../components/PopUpProductosUsados';
+import AddPopupProductos from '../components/AddPopupProductosUsados';
+import useAddProductosUsados from '../hooks/productosUsados/useAddProductosUsados';
 import { useParams } from 'react-router-dom';   
 
 const ProductosUsados = () => {
@@ -29,6 +26,18 @@ const ProductosUsados = () => {
     dataProducto,
     setDataProducto,
   } = useEditProductosUsados(setProductosUsados);
+
+  // Add Productos Usados Hook
+  const {
+    isPopupOpen,
+    setIsPopupOpen,
+    productosDisponibles,
+    loadProductosDisponibles,
+    selectedProducto,
+    setSelectedProducto,
+    handleAddProducto,
+} = useAddProductosUsados(n_orden, setProductosUsados);
+
 
   const handleProductoFilterChange = (e) => {
     setFilterProducto(e.target.value);
@@ -74,6 +83,9 @@ const ProductosUsados = () => {
                 <img src={UpdateIcon} alt="edit" />
               )}
             </button>
+
+            <button onClick={loadProductosDisponibles}>+</button>
+            
             <Search
               value={filterProducto}
               onChange={handleProductoFilterChange}
@@ -104,6 +116,16 @@ const ProductosUsados = () => {
         data={dataProducto[0] || {}}
         action={handleUpdate}
       />
+
+      {/* Popup para agregar un producto */}
+      <AddPopupProductos
+                show={isPopupOpen}
+                setShow={setIsPopupOpen}
+                productos={productosDisponibles}
+                selectedProducto={selectedProducto}
+                setSelectedProducto={setSelectedProducto}
+                onAdd={handleAddProducto}
+            />
     </div>
   );
 };

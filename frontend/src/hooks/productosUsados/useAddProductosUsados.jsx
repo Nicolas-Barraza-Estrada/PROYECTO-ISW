@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getProductosDisponibles, addProductUsed } from "@services/productosUsados.service";
 import { showSuccessAlert, showErrorAlert } from "@helpers/sweetAlert";
+import { formatProductoUsadoData } from "@helpers/formatData.js";
 
 const useAddProductosUsados = (nOrden, setProductosUsados) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false); // Estado para mostrar el popup
@@ -24,7 +25,11 @@ const useAddProductosUsados = (nOrden, setProductosUsados) => {
 
         try {
             const data = await addProductUsed(nOrden, selectedProducto.idProducto, cantidad);
-            showSuccessAlert("¡Éxito!", "Producto agregado correctamente");
+            if (data.status === "Client error") {
+                throw new Error(data.message);
+            } else {
+                showSuccessAlert("¡Éxito!", "Producto agregado correctamente");
+            }
 
             // Actualiza la lista de productos usados en el estado
             setProductosUsados((prevProductos) => [...prevProductos, data.data]);

@@ -21,9 +21,15 @@ const useAddOrdenes = (setInventory) => {
             const addedItem = await addOrdenes(newItem); 
             const formattedItem = formatOrdenData(addedItem); 
             setInventory((prevInventory) => [...prevInventory, formattedItem]);
-            showSuccessAlert('¡Producto agregado!', 'El producto se ha agregado correctamente.');
+
+            if (addedItem.status === 'Client error') {
+                throw new Error(addedItem.message);
+            } else {
+                showSuccessAlert('¡Éxito!', 'Producto agregado correctamente.');
+            }
             setIsAddPopupOpen(false);
             setNewItemData({});
+            
         } catch (error) {
             console.error('Error adding item:', error);
             showErrorAlert('Error', 'No se pudo agregar el producto.');

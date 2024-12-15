@@ -32,39 +32,3 @@ export async function updateOrdenes(data, id) {
         return error.response.data;
     }
 }
-
-// ----------------------------------------
-// Funciones para productos usados
-// ----------------------------------------
-
-// Obtener productos usados por número de orden
-export async function getProductsUsed(nOrden) {
-    try {
-        const { data } = await axios.get(`/productosUsados/listar/${nOrden}`);
-        return data; // Asumimos que 'data' contiene la lista de productos
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
-// Agregar productos usados a una orden
-export async function addProductUsed(nOrden, idProducto, cantidad) {
-    try {
-        const newProductData = { n_orden: nOrden, idProducto, cantidad };
-        const { data } = await axios.post('/productosUsados/crear', newProductData);
-        return data; // Asumimos que el backend devuelve el producto agregado
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
-// Actualizar cantidad de productos usados en una orden
-export async function updateProductUsed(nOrden, idProducto, cantidad) {
-    try {
-        const updateData = { n_orden: nOrden, idProducto, cantidad };
-        const { data } = await axios.put('/productosUsados/actualizar', updateData);
-        return data; // Asumimos que el backend devuelve el producto actualizado
-    } catch (error) {
-        return error.response.data;
-    }
-}

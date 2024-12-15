@@ -29,7 +29,9 @@ const useEditOrdenes = (setOrdenes) => {
                 setIsPopupOrdOpen(false); // Cierra el popup
 
                 // Formatea los datos actualizados
+                console.log("updatedOrdenData:", updatedOrdenData);
                 const formattedOrden = formatOrdenData(updatedOrden);
+                console.log("Orden actualizada:", formattedOrden);
 
                 // Actualiza el estado de las órdenes en la lista
                 setOrdenes((prevOrdenes) =>

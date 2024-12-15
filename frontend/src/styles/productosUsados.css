@@ -1,3 +1,21 @@
+.back-button {
+    background-color: #007bff;  /* Color de fondo */
+    color: white;  /* Color del texto */
+    padding: 10px 20px;  /* Espaciado dentro del botón */
+    font-size: 16px;  /* Tamaño del texto */
+    border: none;  /* Sin borde */
+    border-radius: 100px;  /* Bordes redondeados */
+    cursor: pointer;  /* Indicador de cursor como mano */
+    margin-bottom: 20px;  /* Espacio inferior */
+    transition: background-color 0.3s ease;  /* Transición suave */
+    padding: 30px;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;  /* Color de fondo al pasar el ratón */
+  }
+
+
 .main-container {
     display: flex;
     flex-direction: column;
@@ -8,8 +26,9 @@
 }
 .table-container {
     width: 90%;
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 140px;
+    padding-bottom: 130px ;
+
 }
 .top-table {
     display: flex;
@@ -78,3 +97,5 @@ input[readonly] {
     background-color: #0056b3;
   }
   
+  /* productosUsados.css */
+

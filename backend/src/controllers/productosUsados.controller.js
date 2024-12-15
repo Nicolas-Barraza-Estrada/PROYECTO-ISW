@@ -130,8 +130,16 @@ import {
             // Actualiza la cantidad de productos en inventary
             inventary.stock -= productosUsados.cantidad;
             await inventaryR.save(inventary);
+            // retorn productosUsados y el nombre del producto
+            const inventaryUpdated = await inventaryR.findOneBy({ idProducto: productosUsados.idProducto });
+            return handleSuccess(res, 200, "Producto actualizado correctamente", {
+                n_orden: productosUsados.n_orden,
+                idProducto: productosUsados.idProducto,
+                nombre: inventary.nombre,
+                cantidad: productosUsadosExiste.cantidad,
+                stock: inventaryUpdated.stock
+            });
 
-            return handleSuccess(res, 200, "Relación actualizada y stock ajustado", inventary); 
         } catch (error) {
             console.error("Error en el servidor:", error.message);
             return handleErrorServer(res, 500, error.message);
@@ -157,7 +165,8 @@ import {
                     n_orden: productosUsados[i].n_orden,
                     idProducto: productosUsados[i].idProducto,
                     nombre: inventary.nombre,
-                    cantidad: productosUsados[i].cantidad
+                    cantidad: productosUsados[i].cantidad,
+                    stock : inventary.stock
                 });
             }
             return handleSuccess(res, 200, "Productos usados obtenidos correctamente", productosUsadosList);
@@ -169,3 +178,37 @@ import {
 
     }
 }
+
+    //listar productos dispobibles ppara relacionar con ordenes, recibe n_orden, 
+    //obtiene los productos usados en esa orden y retorna los productos que no tienen relación
+    export async function getProductosDisponibles(req, res) {
+        try {
+            const productosUsadosR = AppDataSource.getRepository(ProductosUsadosSchema);
+            const n_orden = req.params.n_orden;
+            const productosUsados = await productosUsadosR.findBy({ n_orden: n_orden });
+            console.log(productosUsados);
+            if (productosUsados.length === 0) {
+                return handleErrorClient(res, 404, "No hay productos usados en esta orden",productosUsados);
+            }
+            const inventaryR = AppDataSource.getRepository(InventarySchema);
+            const inventary = await inventaryR.find();
+            console.log(inventary);
+            
+            const productosDisponibles = [];
+            for (let i = 0; i < inventary.length; i++) {
+                let existe = false;
+                for (let j = 0; j < productosUsados.length; j++) {
+                    if (inventary[i].idProducto === productosUsados[j].idProducto) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (!existe) {
+                    productosDisponibles.push(inventary[i]);
+                }
+            }
+            return handleSuccess(res, 200, "Productos disponibles obtenidos correctamente", productosDisponibles);
+        } catch (error) {
+            return handleErrorServer(res, 500, error.message);
+        }
+    }

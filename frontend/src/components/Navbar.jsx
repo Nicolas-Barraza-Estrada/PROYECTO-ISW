@@ -84,18 +84,6 @@ const Navbar = () => {
                                 Órdenes
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink 
-                                to="/inventory" 
-                                onClick={() => { 
-                                    setMenuOpen(false); 
-                                    addActiveClass();
-                                }} 
-                                activeClassName="active"
-                            >
-                                Inventario
-                            </NavLink>
-                        </li>
                     </>
                 )}
 

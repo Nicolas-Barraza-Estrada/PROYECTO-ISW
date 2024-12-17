@@ -26,27 +26,6 @@ const router = createBrowserRouter([
       {
         path: '/users',
         element: (
-        <ProtectedRoute allowedRoles={['administrador']}>
-          <Users />
-        </ProtectedRoute>
-        ),    
-    },
-    {
-      path: '/ordenes',
-      element: (
-      <ProtectedRoute allowedRoles={['administrador']}> 
-        <Ordenes />
-      </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/productosUsados/:n_orden',
-      element: (
-      <ProtectedRoute allowedRoles={['administrador']}>
-        <ProductosUsados />
-      </ProtectedRoute>
-      ),
-    },
           <ProtectedRoute allowedRoles={['administrador']}>
             <Users />
           </ProtectedRoute>
@@ -61,15 +40,23 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: '/productosUsados/:n_orden',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <ProductosUsados />
+          </ProtectedRoute>
+        )
+      },
+      {
         path: '/inventory',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Inventory />
           </ProtectedRoute>
-        ),
+        )
       },
       {
-        path: '/sesion', // Ruta para la página de Sesión
+        path: '/sesion',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Sesion />

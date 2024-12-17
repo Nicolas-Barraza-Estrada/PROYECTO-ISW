@@ -20,7 +20,8 @@ const useOrdenes = () => {
             const response = await getOrdenes();
             const formattedData = response.map(ordenes => ({    
                 rut_Trabajador: ordenes.rut_Trabajador,
-                n_orden: ordenes.n_orden,
+                //pasar n_orden de string a number
+                n_orden: parseInt(ordenes.n_orden),
                 nombreCliente: ordenes.nombreCliente,
                 fono_cliente: ordenes.fono_cliente,
                 email_cliente: ordenes.email_cliente,

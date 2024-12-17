@@ -6,44 +6,57 @@ import {
 import OrdenesSchema from "../entity/ordenes.entity.js";
 import UserSchema from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
-
-export async function createOrdenes(req, res) {
+import { createOrdenesValidation } from "../validations/ordenes.validation.js";
+import { updateOrdenesValidation } from "../validations/ordenes.validation.js";
+import {
+    createOrdenesService,
+    getOrdenesService,
+    getOrdenService,
+    updateOrdenService,
+  } from "../services/ordenes.services.js";
+  
+  export async function createOrdenes(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
         const ordenes = req.body;
+
+        const { error } = createOrdenesValidation.validate(ordenes);
+
+        if (error) {
+            return handleErrorClient(res, 404, error.details[0].message, ordenes);
+        }
         
-        // Valida que los campos requeridos no estén vacíos 
-        if (!ordenes.rut_Trabajador || !ordenes.n_orden || !ordenes.nombreCliente 
+        if (!ordenes.rut_Trabajador || !ordenes.nombreCliente 
             || !ordenes.fono_cliente || !ordenes.email_cliente || !ordenes.descripcion 
             || !ordenes.estado) {
-                return handleErrorClient(res, 404, "Datos incompletos",ordenes);
+                return handleErrorClient(res, 404, "Datos incompletos", ordenes);
         }
-        console.log(ordenes.rut_Trabajador)
 
-        // Valida que el rut_Trabajor este registrado en en esquema de la base de datos (user)
         const userR = AppDataSource.getRepository(UserSchema);
         const user = await userR.findOneBy({ rut: ordenes.rut_Trabajador });
         if (!user) {
-        console.log("El rut del trabajador no está registrado");
-        return handleErrorClient(res, 404, "El rut del trabajador no está registrado",ordenes);
+            return handleErrorClient(res, 404, "El rut del trabajador no está registrado", ordenes);
         }
         
-        // n° orden es unico
-        const ordenesExiste = await ordenesR.findOneBy({ n_orden: ordenes.n_orden });
-        if (ordenesExiste) {
-            console.log("El numero de orden ya está registrado");
-            return handleErrorClient(res, 404, "El numero de orden ya está registrado",ordenes);
-        };
-        
-        const newOrdenes = ordenesR.create({
+        const countOrdenes = await ordenesR.count();
+        let newNOrden = countOrdenes + 1;
+        while (1) {
+            const ordenExist = await ordenesR.findOneBy({ n_orden: newNOrden.toString() });
+            if (!ordenExist) {
+                break;
+            }
+            newNOrden += 1;
+        }
+        // crea la nueva orden de trabajo
+            const newOrdenes = ordenesR.create({
             rut_Trabajador: ordenes.rut_Trabajador,
-            n_orden: ordenes.n_orden,
+            n_orden: newNOrden.toString(), // Convertir a string si `n_orden` es varchar (porque asi esta en entity)
             nombreCliente: ordenes.nombreCliente,
             fono_cliente: ordenes.fono_cliente,
             email_cliente: ordenes.email_cliente,
             descripcion: ordenes.descripcion,
             estado: ordenes.estado,
-            costo: ordenes.costo,
+            costo: 0,
         });
         
         const ordenesSaved = await ordenesR.save(newOrdenes); 
@@ -52,7 +65,8 @@ export async function createOrdenes(req, res) {
     } catch (error) {
         return handleErrorServer(res, 500, error.message);
     }
-    }
+}
+
 
 export async function getOrdenes(req, res) {
     try {
@@ -69,7 +83,6 @@ export async function getOrdenes(req, res) {
     }
 }
 
-// obetener una orden de trabajo por su n_orden
 export async function getOrden(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
@@ -86,13 +99,16 @@ export async function getOrden(req, res) {
     }
 }
 
-// update segun el n_orden 
 export async function updateOrden(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
         const ordenes = req.body;
+
+        const { error } = updateOrdenesValidation.validate(ordenes);
         
-        //validar que todos los campos existan
+        if (error) {
+            return handleErrorClient(res, 404, error.details[0].message, ordenes);
+        }
         if ( !ordenes.n_orden || !ordenes.descripcion || !ordenes.estado || !ordenes.costo) {
             return handleErrorClient(res, 404, "Datos incompletos",ordenes);
         }
@@ -105,6 +121,10 @@ export async function updateOrden(req, res) {
         console.log(ordenExist)
         if (!ordenExist) {
             return handleErrorClient(res, 404, "No existe la orden de trabajo",ordenes);
+        }
+
+        if(ordenes.costos < 0){
+            return handleErrorClient(res, 404, "El costo no puede ser negativo",ordenes);
         }
         
         ordenExist.descripcion = ordenes.descripcion;

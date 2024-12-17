@@ -2,7 +2,6 @@
 import Joi from "joi";
 
 export const createProductoUsadoValidation = Joi.object({
-    //n_orden,idProducto,cantidad
     n_orden: Joi.number()
     .integer()
     .positive()
@@ -28,7 +27,6 @@ export const createProductoUsadoValidation = Joi.object({
 })
 
 export const updateProductoUsadoValidation = Joi.object({
-    //n_orden,idProducto,cantidad
     n_orden: Joi.number()
     .integer()
     .positive()

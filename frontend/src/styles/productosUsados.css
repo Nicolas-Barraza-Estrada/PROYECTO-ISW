@@ -1,0 +1,166 @@
+.back-button {
+    background-color: #638da0;  /* Color de fondo */
+    color: white;  /* Color del texto */
+    padding: 10px 20px;  /* Espaciado dentro del botón */
+    font-size: 16px;  /* Tamaño del texto */
+    border: none;  /* Sin borde */
+    border-radius: 100px;  /* Bordes redondeados */
+    cursor: pointer;  /* Indicador de cursor como mano */
+    margin-bottom: 20px;  /* Espacio inferior */
+    transition: background-color 0.3s ease;  /* Transición suave */
+    padding: 30px;
+  }
+  
+  .back-button:hover {
+    background-color: #306883;  /* Color de fondo al pasar el ratón */
+  }
+
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+.table-container {
+    width: 90%;
+    max-width: 140px;
+    padding-bottom: 130px ;
+
+}
+.top-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+.title-table {
+    color: #003366;
+    font-size: 24px;
+}
+.filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.filter-actions button,
+.add-inventory-button {
+    background: rgba(255, 255, 255, 0.87);
+    border: none;
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+.add-inventory-button {
+    font-size: 24px; 
+}
+@media (max-width: 767px) {
+    .top-table {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .filter-actions {
+        justify-content: flex-end;
+        margin-bottom: 10px;
+    }
+    .table-container {
+        width: 95%;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .title-table {
+        margin-left: 35px;
+    }
+}
+input[readonly] {
+    background-color: #eef7ff;
+    cursor: not-allowed;
+  }
+  .action-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .action-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* productosUsados.css */
+
+
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: #507687;
+}
+.popup {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    max-width: 90%;
+    height: auto;
+}
+.popup input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #eef7ff;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+.popup-actions button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.popup-actions button:hover {
+    background-color: #0056b3;
+}
+
+.void-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}

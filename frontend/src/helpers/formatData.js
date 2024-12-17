@@ -24,18 +24,25 @@ export function convertirMinusculas(obj) {
 export function formatOrdenData(orden) 
 {   
     return {
-        rut_Trabajador: formatRut(orden.rut_Trabajador),
-        n_orden: orden.n_orden,
-        nombreCliente: startCase(orden.nombreCliente),
-        fono_cliente: orden.fono_cliente,
-        email_cliente: orden.email_cliente,
-        descripcion: orden.descripcion,
+        ...orden,
+        n_orden: parseInt(orden.n_orden),
+        descripcion: startCase(orden.descripcion),
         estado: startCase(orden.estado),
         costo: orden.costo
     };
     
 }
 
+export function formatProductoUsadoData(producto){
+    return {
+        ...producto,
+        n_orden: parseInt(producto.n_orden),
+        idProducto: producto.idProducto,
+        nombre: startCase(producto.nombre),
+        cantidad: producto.cantidad,
+        stock: producto.stock
+    };
+}
 
 export function formatInventoryData(inventory) {
     return {

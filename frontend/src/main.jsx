@@ -11,16 +11,17 @@ import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Inventory from './pages/Inventory';
+import Sesion from './pages/Sesion';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root/>,
-    errorElement: <Error404/>,
+    element: <Root />,
+    errorElement: <Error404 />,
     children: [
       {
         path: '/home',
-        element: <Home/>
+        element: <Home />
       },
       {
         path: '/users',
@@ -46,11 +47,32 @@ const router = createBrowserRouter([
       </ProtectedRoute>
       ),
     },
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Users />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/ordenes',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Ordenes />
+          </ProtectedRoute>
+        )
+      },
       {
         path: '/inventory',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
-            <Inventory/>
+            <Inventory />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/sesion', // Ruta para la página de Sesión
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Sesion />
           </ProtectedRoute>
         )
       }
@@ -58,14 +80,14 @@ const router = createBrowserRouter([
   },
   {
     path: '/auth',
-    element: <Login/>
+    element: <Login />
   },
   {
     path: '/register',
-    element: <Register/>
+    element: <Register />
   }
-])
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
-)
+  <RouterProvider router={router} />
+);

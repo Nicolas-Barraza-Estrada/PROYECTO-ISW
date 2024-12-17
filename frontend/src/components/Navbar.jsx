@@ -72,21 +72,38 @@ const Navbar = () => {
                                 Órdenes
                             </NavLink>
                         </li>
+                    </>
+                    )
+                    }
+                    {userRole === 'administrador' && (<li>
+                        <NavLink 
+                            to="/inventory" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Inventario
+                        </NavLink>
+                    </li>)}
+                    {userRole === 'administrador' && (
+                    <>
                         <li>
                             <NavLink 
-                                to="/inventory" 
+                                to="/ordenes" 
                                 onClick={() => { 
                                     setMenuOpen(false); 
                                     addActiveClass();
                                 }} 
                                 activeClassName="active"
                             >
-                                Inventario
+                                Órdenes
                             </NavLink>
                         </li>
                     </>
-                    )
-                    }
+                )}
+
                     {userRole === 'administrador' && (
                     <li>
                         <NavLink 
@@ -98,6 +115,21 @@ const Navbar = () => {
                             activeClassName="active"
                         >
                             Usuarios
+                        </NavLink>
+                    </li>
+                    )}
+                    {/* Nuevo enlace para la página de Sesiones */}
+                    {userRole === 'administrador' && (
+                    <li>
+                        <NavLink 
+                            to="/sesion" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Sesiones
                         </NavLink>
                     </li>
                     )}
@@ -113,6 +145,20 @@ const Navbar = () => {
                             Cerrar sesión
                         </NavLink>
                     </li>
+                    {userRole === "administrador" && (
+                        <li>
+                            <NavLink
+                                to="/asistencia"
+                                onClick={() => {
+                                    setMenuOpen(false);
+                                    addActiveClass();
+                                }}
+                                activeClassName="active"
+                            >
+                                Asistencias
+                            </NavLink>
+                        </li>
+                    )}
                 </ul>
             </div>
             <div className="hamburger" onClick={toggleMenu}>

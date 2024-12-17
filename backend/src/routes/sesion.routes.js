@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createSesion,
     getSesion,
@@ -8,6 +10,11 @@ import {
 }from "../controllers/sesion.controller.js";
 
 const router = Router();
+
+router
+    .use(authenticateJwt)
+    .use(isAdmin);
+
 
 router.post('/', createSesion);
 router.get('/all', getSesiones);

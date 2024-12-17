@@ -4,17 +4,15 @@ import { showSuccessAlert,showErrorAlert } from "@helpers/sweetAlert.js";
 import { formatProductoUsadoData } from "@helpers/formatData.js";
 
 const useEditProductosUsados = (setProductosUsados) => {
-    const [isPopupProductosOpen, setIsPopupProductosOpen] = useState(false); // Estado para mostrar el popup
-    const [dataProducto, setDataProducto] = useState([]); // Datos del producto usado seleccionado
+    const [isPopupProductosOpen, setIsPopupProductosOpen] = useState(false); 
+    const [dataProducto, setDataProducto] = useState([]); 
 
-    // Maneja el evento de clic en el botón de editar
     const handleClickUpdate = () => {
         if (dataProducto.length > 0) {
-            setIsPopupProductosOpen(true); // Muestra el popup
+            setIsPopupProductosOpen(true); 
         }
     };
 
-    // Maneja la actualización del producto usado
     const handleUpdate = async (updatedProductoData) => {
         if (updatedProductoData) {
             try {
@@ -22,7 +20,7 @@ const useEditProductosUsados = (setProductosUsados) => {
                     updatedProductoData,
                     dataProducto[0].idProducto,
                     //console.log("idProductoUsado", dataProducto[0].idProducto)
-                ); // Actualiza el producto usado en el backend
+                ); 
                 console.log("mensaje: ", updatedProducto.status);
                 if (updatedProducto.status === "Client error") {
                     throw new Error(updatedProducto.message);
@@ -33,12 +31,11 @@ const useEditProductosUsados = (setProductosUsados) => {
                     );
                 }
 
-                setIsPopupProductosOpen(false); // Cierra el popup
+                setIsPopupProductosOpen(false); 
 
-                // Formatea los datos actualizados
                 const formattedProducto = formatProductoUsadoData(updatedProducto);
                 console.log("updatedProducto", updatedProducto);
-                // Actualiza el estado de los productos usados en la lista
+
                 setProductosUsados((prevProductos) =>
                     prevProductos.map((producto) =>
                         producto.n_orden === formattedProducto.n_orden &&
@@ -48,7 +45,7 @@ const useEditProductosUsados = (setProductosUsados) => {
                     )
                 );
 
-                setDataProducto([]); // Limpia los datos seleccionados
+                setDataProducto([]); 
             } catch (error) {
                 console.error("Error al actualizar el producto usado:", error);
                 showErrorAlert(

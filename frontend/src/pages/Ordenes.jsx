@@ -11,15 +11,15 @@ import AddPopupOrd from '../components/addPopUpOrd';
 import PopupOrd from '../components/PopUpOrdenes';
 import ViewIcon from '../assets/ViewIcon.svg';
 import ViewIconDisabled from '../assets/ViewIconDisabled.svg';
-import { useNavigate } from 'react-router-dom'; // Importa el hook para redirección
+import { useNavigate } from 'react-router-dom'; 
 
 const Ordenes = () => {
   const { ordenes, setOrdenes } = useOrdenes();
   const [filterRut, setFilterRut] = useState('');
-  const navigate = useNavigate(); // Hook para manejar navegación
+  const navigate = useNavigate(); 
 
   const handleRedirect = (n_orden) => {
-    navigate(`/productosUsados/${n_orden}`); // Redirige a la página con n_orden como parámetro
+    navigate(`/productosUsados/${n_orden}`); 
   };
 
   // Edit Ordenes Hook
@@ -103,14 +103,14 @@ const Ordenes = () => {
           onSelectionChange={handleSelectionChange}
         />
       </div>
-      {/* Edit Popup */}
+      {/* Edit Popup ordenes */}
       <PopupOrd
         show={isPopupOrdOpen}
         setShow={setIsPopupOrdOpen}
         data={dataOrden[0] || {}}
         action={handleUpdate}
       />
-      {/* Add Popup */}
+      {/* Add Popup ordenes*/}
       <AddPopupOrd
         show={isAddPopupOpen}
         setShow={setIsAddPopupOpen}

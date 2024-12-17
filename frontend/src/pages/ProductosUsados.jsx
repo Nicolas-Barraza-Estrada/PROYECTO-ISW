@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'; // Importa el componente Link de react-router-dom
+import { Link } from 'react-router-dom'; 
 import Table from '@components/Table';
 import Search from '../components/Search';
 import UpdateIcon from '../assets/updateIcon.svg';
@@ -13,7 +13,7 @@ import useAddProductosUsados from '../hooks/productosUsados/useAddProductosUsado
 import { useParams } from 'react-router-dom';   
 
 const ProductosUsados = () => {
-  const { n_orden } = useParams(); // Obtiene el n_orden desde la URL
+  const { n_orden } = useParams(); 
   const { productosUsados, setProductosUsados } = useProductosUsados(n_orden);
   const [filterProducto, setFilterProducto] = useState("");
 
@@ -59,7 +59,7 @@ const ProductosUsados = () => {
 
   return (
     <div className="main-container">
-          {/* Botón para volver a Ordenes */}
+          {/* Botón para volver a /Ordenes */}
           <Link to="/ordenes">
             <button className="back-button">
               Volver a Órdenes
@@ -94,9 +94,9 @@ const ProductosUsados = () => {
           </div>
         </div>
 
-        {/* Verifica si no hay productos */}
+        {/* por si acaso no hay productos */}
         {productosUsados.length === 0 ? (
-          <p>No hay productos disponibles para esta orden.</p>
+          <p className='void-table' >No hay productos disponibles para esta orden.</p>
         ) : (
           <Table
             data={productosUsados}
@@ -109,7 +109,7 @@ const ProductosUsados = () => {
         )}
         
       </div>
-      {/* Edit Popup */}
+      {/* Edit Popup producto*/}
       <PopupProductos
         show={isPopupProductosOpen}
         setShow={setIsPopupProductosOpen}
@@ -117,7 +117,7 @@ const ProductosUsados = () => {
         action={handleUpdate}
       />
 
-      {/* Popup para agregar un producto */}
+      {/* Popup add producto */}
       <AddPopupProductos
                 show={isPopupOpen}
                 setShow={setIsPopupOpen}

@@ -4,36 +4,36 @@ import { showErrorAlert, showSuccessAlert } from "@helpers/sweetAlert.js";
 import { formatOrdenData } from "@helpers/formatData.js";
 
 const useEditOrdenes = (setOrdenes) => {
-    const [isPopupOrdOpen, setIsPopupOrdOpen] = useState(false); // Estado para mostrar el popup
-    const [dataOrden, setDataOrden] = useState([]); // Datos de la orden seleccionada
+    const [isPopupOrdOpen, setIsPopupOrdOpen] = useState(false); 
+    const [dataOrden, setDataOrden] = useState([]); 
 
-    // Maneja el evento de clic en el botón de editar
+    
     const handleClickUpdate = () => {
         if (dataOrden.length > 0) {
-            setIsPopupOrdOpen(true); // Muestra el popup
+            setIsPopupOrdOpen(true);
         }
     };
 
-    // Maneja la actualización de la orden
+    
     const handleUpdate = async (updatedOrdenData) => {
         if (updatedOrdenData) {
             try {
                 const updatedOrden = await updateOrdenes(
                     updatedOrdenData,
                     dataOrden[0].idOrden
-                ); // Actualiza la orden en el backend
+                ); 
                 showSuccessAlert(
                     "¡Actualizado!",
                     "La orden ha sido actualizada correctamente."
                 );
-                setIsPopupOrdOpen(false); // Cierra el popup
+                setIsPopupOrdOpen(false); 
 
-                // Formatea los datos actualizados
+                
                 console.log("updatedOrdenData:", updatedOrdenData);
                 const formattedOrden = formatOrdenData(updatedOrden);
                 console.log("Orden actualizada:", formattedOrden);
 
-                // Actualiza el estado de las órdenes en la lista
+                
                 setOrdenes((prevOrdenes) =>
                     prevOrdenes.map((orden) =>
                         orden.n_orden === formattedOrden.n_orden
@@ -42,7 +42,7 @@ const useEditOrdenes = (setOrdenes) => {
                     )
                 );
 
-                setDataOrden([]); // Limpia los datos seleccionados
+                setDataOrden([]); 
             } catch (error) {
                 console.error("Error al actualizar la orden:", error);
                 showErrorAlert(

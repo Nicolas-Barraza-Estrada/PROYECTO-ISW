@@ -1,7 +1,6 @@
 import axios from "./root.service.js";
 import { formatOrdenData } from '@helpers/formatData.js';
 
-// Obtener todas las órdenes
 export async function getOrdenes() {
     try {
         const { data } = await axios.get('/ordenes/listar');
@@ -12,7 +11,6 @@ export async function getOrdenes() {
     }
 }
 
-// Crear nueva orden
 export async function addOrdenes(newItem) {
     try {
         const response = await axios.post('/ordenes/crear/', newItem);
@@ -22,10 +20,9 @@ export async function addOrdenes(newItem) {
     }
 }
 
-// Actualizar orden existente
 export async function updateOrdenes(data, id) {
     try {
-        const response = await axios.put(`/ordenes/actualizar/?id=${id}`, data);
+        const response = await axios.put(`/ordenes/actualizar/`, data);
         return response.data.data;
     } catch (error) {
         console.log(error);

@@ -3,9 +3,9 @@ import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
 export default function PopupOrd({ show, setShow, data, action }) {
-  const ordenData = data || {}; // Asegúrate de tener un objeto por defecto
+  const ordenData = data || {}; 
   const handleSubmit = (formData) => {
-    // Filtra los datos enviados al backend
+    
     const dataToSend = {
       n_orden: formData.n_orden,
       descripcion: formData.descripcion,
@@ -32,7 +32,7 @@ export default function PopupOrd({ show, setShow, data, action }) {
                   defaultValue: ordenData.n_orden || "",
                   fieldType: "input",
                   type: "text",
-                  readOnly: true, // Campo bloqueado
+                  readOnly: true, 
                 },
                 {
                   label: "Descripción",

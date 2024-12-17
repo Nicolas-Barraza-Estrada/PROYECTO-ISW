@@ -24,7 +24,7 @@ const OrdenesSchema = new EntitySchema({
         n_orden: {
             type: "varchar",
             nullable: false,
-            primary: true // Esto indica que será clave primaria
+            primary: true 
         },
         nombreCliente: {
             type: "varchar",

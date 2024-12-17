@@ -16,7 +16,7 @@ function PageRoot() {
 
   return (
     <>
-      {/* Solo mostrar el Navbar si no estamos en la ruta de ProductosUsados */}
+      {/* Solo mostrar el Navbar si se esta en la ruta de ProductosUsados */}
       {!isProductosUsados && <Navbar />}
       <Outlet />
     </>

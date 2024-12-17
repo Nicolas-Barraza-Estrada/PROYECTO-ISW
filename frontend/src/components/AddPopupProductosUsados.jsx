@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '@styles/productosUsados.css'; // Reutiliza los mismos estilos de popup
+import '@styles/productosUsados.css'; 
 import CloseIcon from '@assets/XIcon.svg';
 
 const AddPopupProductos = ({ show, setShow, productos, selectedProducto, setSelectedProducto, onAdd }) => {
@@ -13,8 +13,8 @@ const AddPopupProductos = ({ show, setShow, productos, selectedProducto, setSele
 
     const handleAddClick = () => {
         onAdd(cantidad);
-        setCantidad(1); // Reinicia la cantidad
-        setShow(false); // Cierra el popup
+        setCantidad(1); 
+        setShow(false); 
     };
 
     const handleClose = () => {
@@ -23,8 +23,8 @@ const AddPopupProductos = ({ show, setShow, productos, selectedProducto, setSele
 
     return (
         show && (
-            <div className="bg"> {/* Fondo oscuro semitransparente */}
-                <div className="popup"> {/* Contenedor del popup centrado */}
+            <div className="bg"> { }
+                <div className="popup"> { }
                     <button className="close" onClick={handleClose}>
                         <img src={CloseIcon} alt="Close" />
                     </button>

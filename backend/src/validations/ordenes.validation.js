@@ -1,7 +1,6 @@
 "use strict";
 import Joi from "joi";
 
-// Validador personalizado para el dominio de correo
 const domainEmailValidator = (value, helper) => {
   if (!value.endsWith("@gmail.cl")) {
     return helper.message(
@@ -11,7 +10,6 @@ const domainEmailValidator = (value, helper) => {
   return value;
 };
 
-// Validación para crear órdenes
 export const createOrdenesValidation = Joi.object({
   rut_Trabajador: Joi.string()
     .min(9)

@@ -54,7 +54,7 @@
 		display: flex;
 	}
 	label {
-		color: #FCFAEE; /*Color label de inputs del formulario*/
+		color: #000000; /*Color label de inputs del formulario*/
 		font-weight: bold;
 		margin-bottom: 0.7vh;
 	}
@@ -119,7 +119,7 @@
 		padding: 8px 5px;
 		background-repeat: no-repeat;
 		margin-bottom: 0.8vh;
-		background-color: #FCFAEE;
+		background-color: #eef7ff;
 		font-weight: regular;
 		font-size: 16px;
 		color: #003366;

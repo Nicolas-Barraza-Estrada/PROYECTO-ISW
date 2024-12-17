@@ -1,4 +1,3 @@
-//productosUsados.routes.js
 import { Router } from "express";
 import { isAdmin } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";

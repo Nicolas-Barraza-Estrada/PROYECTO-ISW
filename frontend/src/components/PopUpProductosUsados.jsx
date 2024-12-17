@@ -3,16 +3,16 @@ import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
 export default function PopUpProductosUsados({ show, setShow, data, action }) {
-  const productoData = data || {}; // Asegúrate de tener un objeto por defecto
+  const productoData = data || {}; 
   const handleSubmit = (formData) => {
-    // Filtra los datos enviados al backend
+
     const dataToSend = {
       n_orden: formData.n_orden,
       nombre: formData.nombre,
       idProducto: formData.idProducto,
       cantidad: formData.cantidad,
     };
-    action(dataToSend); // Llama a la acción proporcionada con los datos procesados
+    action(dataToSend); 
   };
 
   return (
@@ -31,9 +31,8 @@ export default function PopUpProductosUsados({ show, setShow, data, action }) {
                   name: "n_orden",
                   defaultValue: productoData.n_orden || "",
                   fieldType: "input",
-                  //n_orden es numero
                   type: "number",
-                  readOnly: true, // Campo bloqueado
+                  readOnly: true, 
                 },
                 {
                   label: "Producto",
@@ -41,7 +40,7 @@ export default function PopUpProductosUsados({ show, setShow, data, action }) {
                   defaultValue: productoData.nombre || "",
                   fieldType: "input",
                   type: "text",
-                  readOnly: true, // Campo bloqueado
+                  readOnly: true, 
                 },
                 {
                   label: "Cantidad",

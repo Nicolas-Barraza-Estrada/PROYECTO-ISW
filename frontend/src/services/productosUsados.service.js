@@ -1,7 +1,6 @@
 import axios from "./root.service.js";
 import { formatProductoUsadoData } from '@helpers/formatData.js';
 
-// Obtener productos usados por número de orden
 export async function getProductsUsed(n_orden) {
     try {
         const { data } = await axios.get(`/productosUsados/listar/${n_orden}`);
@@ -11,7 +10,6 @@ export async function getProductsUsed(n_orden) {
     }
 }
 
-// Agregar productos usados a una orden
 export async function addProductUsed(nOrden, idProducto, cantidad) {
     try {
         const newProductData = { n_orden: nOrden, idProducto, cantidad };
@@ -41,7 +39,6 @@ export async function updateProductUsed(data,id) {
     }
 }
 
-// getProductosDisponibles .get("/disponibles/:n_orden", getProductosDisponibles);
 export async function getProductosDisponibles(n_orden) {
     try {
         const { data } = await axios.get(`/productosUsados/disponibles/${n_orden}`);

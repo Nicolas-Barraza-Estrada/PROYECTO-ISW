@@ -50,7 +50,7 @@ export default function AddPopupOrd({ show, setShow, action }) {
                                 {
                                     label: "Email Cliente",
                                     name: "email_cliente",
-                                    placeholder: "cliente@ejemplo.com",
+                                    placeholder: "cliente@ejemplo.cl",
                                     fieldType: "input",
                                     type: "email",
                                     required: true,

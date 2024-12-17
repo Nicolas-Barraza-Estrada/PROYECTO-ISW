@@ -26,24 +26,20 @@ import {
             return handleErrorClient(res, 404, error.details[0].message, ordenes);
         }
         
-        // Valida que los campos requeridos no estén vacíos 
         if (!ordenes.rut_Trabajador || !ordenes.nombreCliente 
             || !ordenes.fono_cliente || !ordenes.email_cliente || !ordenes.descripcion 
             || !ordenes.estado) {
                 return handleErrorClient(res, 404, "Datos incompletos", ordenes);
         }
 
-        // Valida que el rut_Trabajador esté registrado en el esquema de la base de datos (user)
         const userR = AppDataSource.getRepository(UserSchema);
         const user = await userR.findOneBy({ rut: ordenes.rut_Trabajador });
         if (!user) {
             return handleErrorClient(res, 404, "El rut del trabajador no está registrado", ordenes);
         }
         
-        // cuenta todas las ordenes de trabajo y le suma 1 para el nuevo n_orden
         const countOrdenes = await ordenesR.count();
         let newNOrden = countOrdenes + 1;
-        // comprueba si el nuevo n_orden ya existe en un bucle hasta que no exista
         while (1) {
             const ordenExist = await ordenesR.findOneBy({ n_orden: newNOrden.toString() });
             if (!ordenExist) {
@@ -54,7 +50,7 @@ import {
         // crea la nueva orden de trabajo
             const newOrdenes = ordenesR.create({
             rut_Trabajador: ordenes.rut_Trabajador,
-            n_orden: newNOrden.toString(), // Convertir a string si `n_orden` es varchar
+            n_orden: newNOrden.toString(), // Convertir a string si `n_orden` es varchar (porque asi esta en entity)
             nombreCliente: ordenes.nombreCliente,
             fono_cliente: ordenes.fono_cliente,
             email_cliente: ordenes.email_cliente,
@@ -87,7 +83,6 @@ export async function getOrdenes(req, res) {
     }
 }
 
-// obetener una orden de trabajo por su n_orden
 export async function getOrden(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
@@ -104,7 +99,6 @@ export async function getOrden(req, res) {
     }
 }
 
-// update segun el n_orden 
 export async function updateOrden(req, res) {
     try {
         const ordenesR = AppDataSource.getRepository(OrdenesSchema);
@@ -115,7 +109,6 @@ export async function updateOrden(req, res) {
         if (error) {
             return handleErrorClient(res, 404, error.details[0].message, ordenes);
         }
-        //validar que todos los campos existan
         if ( !ordenes.n_orden || !ordenes.descripcion || !ordenes.estado || !ordenes.costo) {
             return handleErrorClient(res, 404, "Datos incompletos",ordenes);
         }

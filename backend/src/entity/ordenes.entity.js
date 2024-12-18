@@ -24,7 +24,7 @@ const OrdenesSchema = new EntitySchema({
         n_orden: {
             type: "varchar",
             nullable: false,
-            primary: true
+            primary: true 
         },
         nombreCliente: {
             type: "varchar",
@@ -59,5 +59,6 @@ const OrdenesSchema = new EntitySchema({
         }
     }
 });
+
 
 export default OrdenesSchema;

@@ -1,22 +1,26 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '@components/Navbar';
 import { AuthProvider } from '@context/AuthContext';
 
-function Root()  {
-return (
+function Root() {
+  return (
     <AuthProvider>
-        <PageRoot/>
+      <PageRoot />
     </AuthProvider>
-);
+  );
 }
 
 function PageRoot() {
-return (
+  const location = useLocation();
+  const isProductosUsados = location.pathname.includes('/productosUsados');
+
+  return (
     <>
-        <Navbar />
-        <Outlet />
+      {/* Solo mostrar el Navbar si se esta en la ruta de ProductosUsados */}
+      {!isProductosUsados && <Navbar />}
+      <Outlet />
     </>
-);
+  );
 }
 
 export default Root;

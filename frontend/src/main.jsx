@@ -1,4 +1,5 @@
 import Ordenes from '@pages/Ordenes';
+import ProductosUsados from '@pages/ProductosUsados';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
@@ -40,15 +41,23 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: '/productosUsados/:n_orden',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <ProductosUsados />
+          </ProtectedRoute>
+        )
+      },
+      {
         path: '/inventory',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Inventory />
           </ProtectedRoute>
-        ),
+        )
       },
       {
-        path: '/sesion', 
+        path: '/sesion',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Sesion />

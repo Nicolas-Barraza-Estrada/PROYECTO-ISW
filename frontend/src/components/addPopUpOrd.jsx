@@ -29,15 +29,6 @@ export default function AddPopupOrd({ show, setShow, action }) {
                                     pattern: "^[0-9]+-[0-9kK]$",
                                 },
                                 {
-                                    label: "N_orden",
-                                    name: "n_orden",
-                                    placeholder: "Ejemplo: 01",
-                                    fieldType: "input",
-                                    type: "text",
-                                    required: true,
-                                    pattern: "^[0-9]+$",
-                                },
-                                {
                                     label: "Nombre Cliente",
                                     name: "nombreCliente",
                                     placeholder: "Nombre del cliente",
@@ -59,7 +50,7 @@ export default function AddPopupOrd({ show, setShow, action }) {
                                 {
                                     label: "Email Cliente",
                                     name: "email_cliente",
-                                    placeholder: "cliente@ejemplo.com",
+                                    placeholder: "cliente@ejemplo.cl",
                                     fieldType: "input",
                                     type: "email",
                                     required: true,
@@ -83,15 +74,7 @@ export default function AddPopupOrd({ show, setShow, action }) {
                                         { label: "Completado", value: "completado" },
                                     ],
                                     required: true,
-                                },
-                                {
-                                    label: "Costo",
-                                    name: "costo",
-                                    placeholder: "0",
-                                    fieldType: "input",
-                                    type: "number",
-                                    required: true,
-                                },
+                                }
                             ]}
                             onSubmit={handleSubmit}
                             buttonText="Agregar Orden"

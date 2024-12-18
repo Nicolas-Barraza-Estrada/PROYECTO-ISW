@@ -3,16 +3,6 @@ import { format as formatRut } from 'rut.js';
 import { format as formatTempo } from "@formkit/tempo";
 
 
-export function formatUserData(user) {
-    return {
-        ...user,
-        nombreCompleto: startCase(user.nombreCompleto),
-        rol: startCase(user.rol),
-        rut: formatRut(user.rut),
-        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
-    };
-}
-
 export function convertirMinusculas(obj) {
     for (let key in obj) {
         if (typeof obj[key] === 'string') {
@@ -76,11 +66,33 @@ export function formatPostUpdate(user) {
     };
 }
 
+export function formatUserData(user) {
+    return {
+        ...user,
+        nombreCompleto: startCase(user.nombreCompleto),
+        rol: startCase(user.rol),
+        rut: formatRut(user.rut),
+        createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
+    };
+}
+
+export function formatPostUpdateSesion(sesion) {
+    return {
+        ...sesion,
+        nombreSesion: startCase(sesion.nombreSesion),
+        fecha: formatTempo(sesion.fecha, "DD-MM-YYYY"), 
+        disponibilidad: sesion.disponibilidad ? "Disponible" : "No Disponible",
+        createdAt: formatTempo(sesion.createdAt, "DD-MM-YYYY"), 
+
+    };
+}
+
+
 export function formatSesionData(sesion) {
     return {
         ...sesion,
-        id_sesion: (sesion.id_sesion), 
-        disponibilidad: startCase(sesion.disponibilidad), 
+        nombreSesion: startCase(sesion.nombreSesion),
+        disponibilidad: sesion.disponibilidad ? "Disponible" : "No Disponible", // Mapeo de true/false
         fecha: formatTempo(sesion.fecha, "DD-MM-YYYY"), 
         createdAt: formatTempo(sesion.createdAt, "DD-MM-YYYY"), 
         updatedAt: formatTempo(sesion.updatedAt, "DD-MM-YYYY") 
@@ -96,3 +108,14 @@ export function formatAsistenciaData(asistencia) {
         hora_salida: asistencia.hora_salida,
     };
 }
+export function formatReservaData(reserva) {
+    return {
+        ...reserva, 
+        rut_usuario: formatRut(reserva.rut_usuario), 
+        nombre_cliente: startCase(reserva.nombre_cliente), 
+        fono_cliente: reserva.fono_cliente, 
+        email_cliente: reserva.email_cliente, 
+        nombreSesion: reserva.nombreSesion
+    };
+}
+

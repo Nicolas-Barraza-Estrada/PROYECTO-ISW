@@ -13,6 +13,7 @@ import '@styles/styles.css';
 import Inventory from './pages/Inventory';
 import Sesion from './pages/Sesion';
 import Asistencia from './pages/asistencia';
+import Reserva from './pages/Reserva';
 
 const router = createBrowserRouter([
   {
@@ -65,10 +66,18 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/asistencia',
+      path: '/asistencia',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <Asistencia/>
+            </ProtectedRoute>
+        )
+      },
+      {
+        path: '/reserva', 
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Reserva />
           </ProtectedRoute>
         )
       }

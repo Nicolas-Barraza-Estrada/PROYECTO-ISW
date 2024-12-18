@@ -22,7 +22,6 @@ const Ordenes = () => {
     navigate(`/productosUsados/${n_orden}`); 
   };
 
-  // Edit Ordenes Hook
   const {
     handleClickUpdate,
     handleUpdate,
@@ -32,7 +31,6 @@ const Ordenes = () => {
     setDataOrden,
   } = useEditOrdenes(setOrdenes);
 
-  // Add Ordenes Hook
   const { handleClickAdd, handleAddItem, isAddPopupOpen, setIsAddPopupOpen } =
     useAddOrdenes(setOrdenes);
 
@@ -103,14 +101,12 @@ const Ordenes = () => {
           onSelectionChange={handleSelectionChange}
         />
       </div>
-      {/* Edit Popup ordenes */}
       <PopupOrd
         show={isPopupOrdOpen}
         setShow={setIsPopupOrdOpen}
         data={dataOrden[0] || {}}
         action={handleUpdate}
       />
-      {/* Add Popup ordenes*/}
       <AddPopupOrd
         show={isAddPopupOpen}
         setShow={setIsAddPopupOpen}

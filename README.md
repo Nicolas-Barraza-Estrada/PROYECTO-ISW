@@ -1,9 +1,6 @@
-# Resumen
-  Clase 3 1:11:00 || userSchema  
-
 # Plantilla-ISW-Proyecto-2024
 
-Una plantilla base para proyectos de Ingeniería de Software (ISW) desarrollados durante el año 2024-2. Esta plantilla está diseñada para ayudar a los estudiantes a estructurar y organizar sus proyectos de software, incluyendo tanto la parte de Backend como de Frontend.
+Proyectos de Ingeniería de Software (ISW) desarrollados durante el año 2024-2.
 
 ## Tabla de contenidos
 * [Descripción General](#descripción-general)
@@ -27,7 +24,7 @@ Una plantilla base para proyectos de Ingeniería de Software (ISW) desarrollados
 
 ## Descripción General
 
-La `Plantilla-ISW-Proyecto-2024` es una base preconfigurada para proyectos de Ingeniería de Software que incluye tanto la parte del Backend como la del Frontend. Está diseñada para que los estudiantes puedan enfocarse en desarrollar sus funcionalidades específicas sin tener que preocuparse por la configuración inicial del proyecto. 
+Proyectos de Ingeniería de Software que incluye tanto la parte del Backend como la del Frontend para apoyar las funciones de un taller de bicletas.
 
 ### Backend
 
@@ -35,6 +32,9 @@ El Backend de esta plantilla implementa las siguientes funcionalidades principal
 
 - **Autenticación y Autorización**: Uso de `passport.js` para la autenticación segura de los usuarios.
 - **CRUD de Usuarios**: Permite la lectura, actualización y eliminación de usuarios.
+- **CRUD de Productos en Inventario**: Permite la añadir, buscar y actualizar de productos en el inventario.
+- **CRUD de Ordenes de trabajo**: Permite la añadir, buscar y actualizar ordenes de trabajo.
+- **Relaciones entre Ordenes de trabajo y productos usados**: Permite relacionar que productos a usado cada orden de trabajo.
 - **Registro de Usuarios**: Implementación de un sistema de registro que permite a nuevos usuarios registrarse en la aplicación.
 
 ### Frontend
@@ -43,6 +43,7 @@ El Frontend proporciona una interfaz de usuario simple y funcional para interact
 
 - **Página de Inicio de Sesión**: Permite a los usuarios autenticarse en el sistema.
 - **Página de Registro de Usuarios**: Los nuevos usuarios pueden registrarse mediante un formulario.
+- **Página de Registro de Ordenes de trabajo**: Las ordenes de trabajo pueden registrarse mediante un formulario.
 - **Página de Error**: Muestra un mensaje de error cuando algo sale mal.
 - **Página Principal**: Página de inicio tras la autenticación exitosa.
 - **Página de Gestión de Usuarios**: 
@@ -72,9 +73,17 @@ Este proyecto está dividido en dos partes principales: el Backend y el Frontend
 │   │   │   └── initialSetup.js
 │   │   ├── controllers
 │   │   │   ├── auth.controller.js
-│   │   │   └── user.controller.js
+│   │   │   └── inventory.controller.js
+│   │   │   └── ordenes.controller.js
+│   │   │   └── productosUsados.controller.js
+│   │   │   └── reserva.controller.js
+│   │   │   └── sesion.controller.js
 │   │   ├── entity
-│   │   │   └── user.entity.js
+│   │   │   └── inventary.entity.js
+│   │   │   └── ordenes.entity.js
+│   │   │   └── productosUsados.entity.js
+│   │   │   └── reserva.entity.js
+│   │   │   └── sesion.entity.js
 │   │   ├── handlers
 │   │   │   └── responseHandlers.js
 │   │   ├── helpers
@@ -85,13 +94,18 @@ Este proyecto está dividido en dos partes principales: el Backend y el Frontend
 │   │   ├── routes
 │   │   │   ├── auth.routes.js
 │   │   │   ├── index.routes.js
-│   │   │   └── user.routes.js
+│   │   │   └── ordenes.routes.js
+│   │   │   ├── productosUsados.routes.js
+│   │   │   ├── reserva.routes.js
+│   │   │   ├── sesion.routes.js
 │   │   ├── services
 │   │   │   ├── auth.service.js
 │   │   │   └── user.service.js
 │   │   ├── validations
 │   │   │   ├── auth.validation.js
 │   │   │   └── user.validation.js
+│   │   │   └── ordenes.validation.js
+│   │   │   └── productosUsados.validation.js
 │   │   └── index.js
 │   ├── .gitignore
 │   ├── .prettierrc.json
@@ -116,7 +130,11 @@ Este proyecto está dividido en dos partes principales: el Backend y el Frontend
 │   │   │   ├── Form.jsx
 │   │   │   ├── Navbar.jsx
 │   │   │   ├── Table.jsx
-│   │   │   └── userOptions.jsx
+│   │   │   └── userOptions.jsx 
+│   │   │   ├── addPopUpOrd.jsx
+│   │   │   ├── AddPopupProductosUsados.jsx
+│   │   │   ├── PopUpOrdenes.jsx
+│   │   │   ├── PopUpProductosUsados.jsx
 │   │   ├── context
 │   │   │   └── AuthContext.jsx
 │   │   ├── helpers
@@ -130,9 +148,17 @@ Este proyecto está dividido en dos partes principales: el Backend y el Frontend
 │   │   │   ├── table
 │   │   │   │   └── useTable.jsx
 │   │   │   └── users
-│   │   │       ├── useDeleteUser.jsx
-│   │   │       ├── useEditUser.jsx
-│   │   │       └── useGetUsers.jsx
+│   │   │   │   ├── useDeleteUser.jsx
+│   │   │   │   ├── useEditUser.jsx
+│   │   │   │   └── useGetUsers.jsx
+│   │   │   └── Ordenes
+│   │   │   │   ├── useAddOrdenes.jsx
+│   │   │   │   ├── useEdditOrdenes.jsx
+│   │   │   │   └── useGetOrdenes.jsx
+│   │   │   └── ProductosUsados
+│   │   │       ├── useAddProductosUsados.jsx
+│   │   │       ├── useEdditProductosUsados.jsx
+│   │   │       └── useGetProductosUsados.jsx
 │   │   ├── pages
 │   │   │   ├── EditUser.jsx
 │   │   │   ├── Error404.jsx
@@ -140,10 +166,14 @@ Este proyecto está dividido en dos partes principales: el Backend y el Frontend
 │   │   │   ├── Login.jsx
 │   │   │   ├── Register.jsx
 │   │   │   └── Users.jsx
+│   │   │   ├── Ordenes.jsx
+│   │   │   └── ProductosUsados.jsx
 │   │   ├── services
 │   │   │   ├── auth.service.js
 │   │   │   ├── root.service.js
 │   │   │   └── user.service.js
+│   │   │   └── Ordenes.service.js
+│   │   │   └── ProductosUsados.service.js
 │   │   ├── styles
 │   │   │   ├── animations.css
 │   │   │   └── styles.css

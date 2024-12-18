@@ -13,7 +13,15 @@ const domainEmailValidator = (value, helper) => {
 export const reservaBodyValidation = Joi.object({
 
 
-  
+  id_sesion: Joi.number()
+  .integer()
+  .positive()
+  .messages({
+    "number.base": "El id debe ser un número.",
+    "number.integer": "El id debe ser un número entero.",
+    "number.positive": "El id debe ser un número positivo.",
+  }),
+    
   rut_usuario: Joi.string()
   .min(9)
   .max(12)

@@ -59,7 +59,6 @@ const ProductosUsados = () => {
 
   return (
     <div className="main-container">
-          {/* Botón para volver a /Ordenes */}
           <Link to="/ordenes">
             <button className="back-button">
               Volver a Órdenes
@@ -94,7 +93,6 @@ const ProductosUsados = () => {
           </div>
         </div>
 
-        {/* por si acaso no hay productos */}
         {productosUsados.length === 0 ? (
           <p className='void-table' >No hay productos disponibles para esta orden.</p>
         ) : (
@@ -109,7 +107,6 @@ const ProductosUsados = () => {
         )}
         
       </div>
-      {/* Edit Popup producto*/}
       <PopupProductos
         show={isPopupProductosOpen}
         setShow={setIsPopupProductosOpen}
@@ -117,7 +114,6 @@ const ProductosUsados = () => {
         action={handleUpdate}
       />
 
-      {/* Popup add producto */}
       <AddPopupProductos
                 show={isPopupOpen}
                 setShow={setIsPopupOpen}

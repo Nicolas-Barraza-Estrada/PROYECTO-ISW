@@ -23,6 +23,7 @@ const ReservaSchema = new EntitySchema({
         fono_cliente: {
             type: "varchar",
             length: 15, 
+            nullable: false
         },
         email_cliente: {
             type: "varchar",

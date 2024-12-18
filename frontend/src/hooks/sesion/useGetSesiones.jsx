@@ -3,31 +3,32 @@ import { getSesiones } from "@services/sesion.service.js";
 
 const useGetSesion = () => {
   const [sesiones, setSesiones] = useState([]);
-  const [error, setError] = useState(null);
+
 
   const fetchSesiones = async () => {
     try {
       const response = await getSesiones();
-
-      if (!Array.isArray(response)) {
-        throw new Error("La respuesta del servidor no es un array");
-      }
-
       const formattedData = response.map(sesion => ({
         id_sesion: sesion.id_sesion,
+        nombreSesion: sesion.nombreSesion,
         disponibilidad: sesion.disponibilidad,
         fecha: sesion.fecha,
         createdAt: sesion.createdAt,
         updatedAt: sesion.updatedAt,
       }));
 
-      const processedData = dataLogged(formattedData);
-      setSesiones(processedData); 
+      dataLogged(formattedData);
+      setSesiones(formattedData); 
     } catch (error) {
       console.error("Error fetching sesiones:", error);
       setError("Hubo un error al obtener las sesiones");
     }
   };
+
+  useEffect(() => {
+    fetchSesiones();
+  }, []);
+
 
   const dataLogged = (formattedData) => {
     try {
@@ -35,8 +36,13 @@ const useGetSesion = () => {
       if (sessionData) {
         const { id } = JSON.parse(sessionData);
         if (id) {
-          return formattedData.filter(item => item.id_sesion !== id); 
-        }
+          for (let i = 0; i < formattedData.length; i++) {
+              if (formattedData[i].id_sesion === id) {
+                  formattedData.splice(i, 1);
+                  break;
+              }
+          }
+      }
       }
     } catch (error) {
       console.error("Error processing session data:", error);
@@ -44,11 +50,8 @@ const useGetSesion = () => {
     return formattedData;
   };
 
-  useEffect(() => {
-    fetchSesiones();
-  }, []);
 
-  return { sesiones, fetchSesiones, setSesiones, error };
+  return { sesiones, fetchSesiones, setSesiones };
 };
 
 export default useGetSesion;

@@ -44,6 +44,7 @@ const useInventory = () => {
         } catch (error) {
             console.error("Error processing inventory data:", error);
         }
+        return formattedData
     };
 
     return { inventory, fetchInventory, setInventory };

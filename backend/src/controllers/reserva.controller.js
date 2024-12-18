@@ -10,26 +10,22 @@ import {
 
   export async function createReserva(req, res) {
     try {
-      const { id_sesion, rut_usuario } = req.body;
-  
-      if (!id_sesion || !rut_usuario) {
-        return handleErrorClient(res, 400, 'Faltan datos requeridos: id_sesion o rut_usuario');
+      const reservaData = req.body;
+
+      const { nombre_sesion, ...filteredData } = reservaData;
+
+      const { value, error } = reservaBodyValidation.validate(filteredData);
+      if (error) {
+        return handleErrorClient(res, 400, error.details[0].message);
       }
+
+      const { id_sesion, rut_usuario, fono_cliente } = value;
+      const [reserva] = await createReservaService(id_sesion, rut_usuario, fono_cliente);
   
-      const [reserva, errorReserva] = await createReservaService(id_sesion, rut_usuario);
-  
-      if (errorReserva) {
-        if (errorReserva.includes("disponible")) {
-          return handleErrorClient(res, 400, errorReserva);
-        }
-        if (errorReserva.includes("no existe")) {
-          return handleErrorClient(res, 404, errorReserva);
-        }
-      }
-  
-      handleSuccess(res, 201, 'Reserva creada exitosamente', reserva);
+      handleSuccess(res, 201, "Reserva creada exitosamente", reserva);
     } catch (error) {
-      handleErrorServer(res, 500, 'Error interno al crear la reserva');
+      console.error("Error al crear la reserva:", error);
+      handleErrorServer(res, 500, "Error interno en el servidor");
     }
   }
   export async function getReserva(req, res) {
@@ -74,7 +70,6 @@ import {
         const { id_sesion, rut_usuario } = req.params;
         const reserva = req.body;
         
-        // Validar el cuerpo de la solicitud
         const { value, error } = reservaBodyValidation.validate(reserva);
         if (error) {
             return handleErrorClient(res, 400, error.details[0].message);

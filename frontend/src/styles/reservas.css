@@ -1,0 +1,85 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+/* table container */
+.table-container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* top table (header section) */
+.top-table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* table title */
+.title-table {
+    color: #003366;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* filter and action buttons */
+.filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* individual action buttons */
+.filter-actions button,
+.add-session-button {
+    background: rgba(255, 255, 255, 0.87);
+    border: none;
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+/* button to add a session */
+.add-session-button {
+    font-size: 24px;
+    border-radius: 50%;
+    background-color: #003366;
+    color: #fff;
+}
+
+/* responsive design for smaller screens */
+@media (max-width: 767px) {
+    .top-table {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter-actions {
+        justify-content: flex-end;
+        margin-bottom: 10px;
+    }
+
+    .table-container {
+        width: 95%;
+    }
+}
+
+/* tablet screens (between 768px and 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .title-table {
+        margin-left: 35px;
+    }
+}

@@ -8,14 +8,14 @@ import DeleteIcon from "../assets/deleteIcon.svg";
 import DeleteIconDisable from "../assets/deleteIconDisabled.svg";
 import { useCallback, useState } from "react";
 import "@styles/sesion.css";
-import useEditSesion from "../hooks/sesion/useEditSesion.jsx";
-import useAddSesion from "../hooks/sesion/useAddSesion.jsx";
-import useGetSesion from "../hooks/sesion/useGetSesiones.jsx";
-import useDeleteSesion from "../hooks/sesion/useDeleteSesion";
+import useEditSesion from "@hooks/sesion/useEditSesion.jsx";
+import useAddSesion from "@hooks/sesion/useAddSesion.jsx";
+import useGetSesion from "@hooks/sesion/useGetSesiones.jsx";
+import useDeleteSesion from "@hooks/sesion/useDeleteSesion";
 
 const Sesion = () => {
   const { sesiones, fetchSesiones, setSesiones } = useGetSesion();
-  const [filterId, setFilterId] = useState("");
+  const [filterNombre, setFilterNombre] = useState('');
 
   const {
     handleClickUpdate,
@@ -32,7 +32,7 @@ const Sesion = () => {
   const { handleDelete } = useDeleteSesion(fetchSesiones, setSesiones);
 
   const handleIdFilterChange = (e) => {
-    setFilterId(e.target.value);
+    setFilterNombre(e.target.value);
   };
 
   const handleSelectionChange = useCallback(
@@ -47,7 +47,7 @@ const Sesion = () => {
   };
 
   const columns = [
-    { title: "ID", field: "id_sesion", width: 200, responsive: 2 },
+    { title: "Nombre Sesion", field: "nombreSesion", width: 200, responsive: 2 },
     { title: "Disponibilidad", field: "disponibilidad", width: 150, responsive: 0 },
     { title: "Fecha", field: "fecha", width: 200, responsive: 3 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 },
@@ -86,9 +86,9 @@ const Sesion = () => {
               +
             </button>
             <Search
-              value={filterId}
+              value={filterNombre}
               onChange={handleIdFilterChange}
-              placeholder="Filtrar por ID"
+              placeholder="Filtrar por Nombre"
             />
           </div>
         </div>
@@ -96,8 +96,8 @@ const Sesion = () => {
         <Table
           data={sesiones}
           columns={columns}
-          filter={filterId}
-          dataToFilter={"id_sesion"}
+          filter={filterNombre}
+          dataToFilter={"nombreSesion"}
           initialSortName={"fecha"}
           onSelectionChange={handleSelectionChange}
         />

@@ -13,21 +13,22 @@ const useAddSesion = (setSesion) => {
 
     const handleAddSesion = async (newSesion) => {
         console.log("New Sesion Submitted:", newSesion);
-
-        if (!newSesion.disponibilidad || !newSesion.fecha) {
+    
+        if (!newSesion.disponibilidad || !newSesion.fecha || !newSesion.nombreSesion) {
             showErrorAlert('Error', 'Por favor, complete todos los campos.');
             return;
         }
-
+    
         try {
-            const addedSesion = await addSesion(newSesion); 
-            const formattedSesion = formatSesionData(addedSesion); 
+            const addedSesion = await addSesion(newSesion);
 
-            setSesion((prevSesions) => [...prevSesions, formattedSesion]); 
-
+            const formattedSesion = formatSesionData(addedSesion);
+    
+            setSesion((prevSesions) => [...prevSesions, formattedSesion]);
+    
             showSuccessAlert('¡Sesión agregada!', 'La sesión se ha agregado correctamente.');
-            setIsAddPopupOpen(false); 
-            setNewSesionData({});
+            setIsAddPopupOpen(false);
+            setNewSesionData([]);
         } catch (error) {
             console.error('Error al agregar la sesión:', error);
             showErrorAlert('Error', 'No se pudo agregar la sesión.');

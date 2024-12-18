@@ -21,9 +21,18 @@ export default function PopupSesion({ show, setShow, data, action }) {
                             title="Editar Sesión"
                             fields={[
                                 {
+                                    label: "Nombre de la Sesión",
+                                    name: "nombreSesion",
+                                    defaultValue: sesionData.nombreSesion || "",
+                                    placeholder: "Ingrese el nombre de la sesión",
+                                    fieldType: "input",
+                                    type: "text",
+                                    required: true,
+                                },
+                                {
                                     label: "Fecha",
                                     name: "fecha",
-                                    defaultValue: sesionData.fecha || "",
+                                    defaultValue: sesionData.fecha,
                                     placeholder: "DD-MM-YYYY",
                                     fieldType: "input",
                                     type: "string",

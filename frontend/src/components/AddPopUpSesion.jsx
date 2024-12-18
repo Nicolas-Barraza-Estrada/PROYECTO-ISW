@@ -20,6 +20,14 @@ export default function AddPopupSesion({ show, setShow, action }) {
                             title="Agregar Nueva Sesión"
                             fields={[
                                 {
+                                    label: "Nombre de la Sesión",
+                                    name: "nombreSesion",
+                                    placeholder: "Nombre de la sesión",
+                                    fieldType: "input",
+                                    type: "string",
+                                    required: true,
+                                },
+                                {
                                     label: "Fecha",
                                     name: "fecha",
                                     placeholder: "DD-MM-YYYY",

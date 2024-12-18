@@ -9,12 +9,10 @@ import {
     handleSuccess,
   } from "../handlers/responseHandlers.js";
 
-// Crear una nueva sesión
 export async function createSesion(req, res) {
     try {
         const sesionData = req.body;
 
-        // Validar el cuerpo de la solicitud
         const { value, error } = sesionBodyValidation.validate(sesionData);
         if (error) {
             return handleErrorClient(res, 400, error.details[0].message);
@@ -28,12 +26,11 @@ export async function createSesion(req, res) {
     }
 }
 
-// Obtener una sesión por ID
 export async function getSesion(req, res) {
     try {
         const id = req.params.id_sesion;
 
-        console.log("Recibiendo ID de sesión:", id); // Log para depuración
+        console.log("Recibiendo ID de sesión:", id);
         const sesionFound = await getSesionService(id);
 
         if (!sesionFound) {
@@ -50,58 +47,57 @@ export async function getSesion(req, res) {
 
 export async function getSesiones(req, res) {
     try {
-        const sesiones = await getSesionesService(); // Llama al servicio para obtener sesiones
+        const sesiones = await getSesionesService(); 
 
         if (!sesiones || sesiones.length === 0) {
-            return handleErrorClient(res, 404, "No se encontraron sesiones"); // Manejo de error
+            return handleErrorClient(res, 404, "No se encontraron sesiones"); 
         }
 
-        handleSuccess(res, 200, "Sesiones encontradas", sesiones); // Manejo de éxito
+        handleSuccess(res, 200, "Sesiones encontradas", sesiones); 
     } catch (error) {
         console.error('Error al obtener las sesiones:', error);
-        handleErrorServer(res, 500, "Error interno en el servidor"); // Manejo de error en el servidor
+        handleErrorServer(res, 500, "Error interno en el servidor"); 
     }
 }
 
-// Actualizar una sesión por ID
 export async function updateSesion(req, res) {
     try {
-        const id = req.params.id_sesion; // Obtiene el ID de la sesión desde los parámetros
-        const sesion = req.body; // Obtiene los datos de la sesión del cuerpo de la solicitud
+        const id = req.params.id_sesion; 
+        const sesion = req.body; 
 
-        const { value, error } = sesionBodyValidation.validate(sesion); // Valida los datos
+        const { value, error } = sesionBodyValidation.validate(sesion); 
 
         if (error) {
-            return handleErrorClient(res, 400, error.message); // Manejo de errores de validación
+            return handleErrorClient(res, 400, error.message); 
         }
 
-        const sesionUpdated = await updateSesionService(id, value); // Llama al servicio para actualizar la sesión
+        const sesionUpdated = await updateSesionService(id, value); 
 
         if (!sesionUpdated) {
-            return handleErrorClient(res, 404, "Sesión no encontrada"); // Manejo de error si no se encuentra la sesión
+            return handleErrorClient(res, 404, "Sesión no encontrada"); 
         }
 
-        handleSuccess(res, 200, "Sesión actualizada correctamente", sesionUpdated); // Manejo de éxito
+        handleSuccess(res, 200, "Sesión actualizada correctamente", sesionUpdated); 
     } catch (error) {
         console.error("Error al actualizar una sesión: ", error);
-        handleErrorServer(res, 500, "Error interno en el servidor"); // Manejo de errores del servidor
+        handleErrorServer(res, 500, "Error interno en el servidor");
     }
 }
 
 
 export async function deleteSesion(req, res) {
     try {
-        const id = req.params.id_sesion; // Obtiene el ID de la sesión desde los parámetros
+        const id = req.params.id_sesion; 
 
-        const sesionDeleted = await deleteSesionService(id); // Llama al servicio para eliminar la sesión
+        const sesionDeleted = await deleteSesionService(id); 
 
         if (!sesionDeleted) {
-            return handleErrorClient(res, 404, "Sesión no encontrada"); // Manejo de error si no se encuentra la sesión
+            return handleErrorClient(res, 404, "Sesión no encontrada"); 
         }
 
-        handleSuccess(res, 200, "Sesión eliminada correctamente", sesionDeleted); // Manejo de éxito
+        handleSuccess(res, 200, "Sesión eliminada correctamente", sesionDeleted); 
     } catch (error) {
         console.error("Error al eliminar una sesión: ", error);
-        handleErrorServer(res, 500, "Error interno en el servidor"); // Manejo de errores del servidor
+        handleErrorServer(res, 500, "Error interno en el servidor");
     }
 }

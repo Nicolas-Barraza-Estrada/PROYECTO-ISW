@@ -4,13 +4,18 @@ import { EntitySchema } from "typeorm";
 const SesionSchema = new EntitySchema({
     name: "Sesion",
     tableName: "sesion",
-    columns:{
-        id_sesion:{
+    columns: {
+        id_sesion: {
             type: "int",
             primary: true,
             generated: true,
         },
-        disponibilidad:{
+        nombreSesion: {
+            type: "varchar",
+            nullable: false,
+            unique: true,
+        },
+        disponibilidad: {
             type: "boolean",
             nullable: false,
         },
@@ -22,15 +27,14 @@ const SesionSchema = new EntitySchema({
             type: "timestamp with time zone",
             default: () => "CURRENT_TIMESTAMP",
             nullable: false,
-          },
-          updatedAt: {
+        },
+        updatedAt: {
             type: "timestamp with time zone",
             default: () => "CURRENT_TIMESTAMP",
             onUpdate: "CURRENT_TIMESTAMP",
             nullable: false,
-          },                
-    }
-
-})
+        },
+    },
+});
 
 export default SesionSchema;

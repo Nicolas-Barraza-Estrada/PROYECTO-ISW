@@ -5,6 +5,7 @@ import {
     getAsistencias,
     createAsistencia,
     updateAsistencia,
+    deleteAsistencia,
 } from "../controllers/asistencia.controller.js";
 
 const router = Router();
@@ -16,5 +17,6 @@ router
 router.get('/', getAsistencias); // Ruta para obtener todas las asistencias
 router.post('/', createAsistencia); // Ruta para crear una nueva asistencia
 router.put('/:id', updateAsistencia); // Ruta para actualizar una asistencia por id
+router.delete('/:id', deleteAsistencia); // Ruta para eliminar una asistencia por id
 
 export default router; 

@@ -87,3 +87,12 @@ export function formatSesionData(sesion) {
     };
 }
 
+export function formatAsistenciaData(asistencia) {
+    return {
+        idAsistencia: asistencia.id_asistencia,
+        idUsuario: asistencia.usuarioId,
+        fecha: asistencia.fecha,
+        hora_entrada: asistencia.hora_entrada,
+        hora_salida: asistencia.hora_salida,
+    };
+}

@@ -33,7 +33,7 @@ export const createAsistencia = async (req, res) => {
 
 export const updateAsistencia = async (req, res) => {
     const { id } = req.params;
-    const { fecha, hora_entrada, hora_salida, rut_usuario } = req.body;
+    const { fecha, hora_entrada, hora_salida, usuarioId } = req.body;
     try {
         const asistenciaRepository = AppDataSource.getRepository(Asistencia);
         
@@ -47,7 +47,6 @@ export const updateAsistencia = async (req, res) => {
         asistencia.fecha = fecha;
         asistencia.hora_entrada = hora_entrada;
         asistencia.hora_salida = hora_salida;
-        asistencia.usuarioId = usuarioId;
 
         // Guardar los cambios
         await asistenciaRepository.save(asistencia);
@@ -56,3 +55,26 @@ export const updateAsistencia = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const deleteAsistencia = async (req, res) => {
+        const { id } = req.params; // ID de la asistencia a eliminar
+    
+        try {
+            const asistenciaRepository = AppDataSource.getRepository(Asistencia);
+    
+            // Verificar si la asistencia existe
+            const asistencia = await asistenciaRepository.findOne({ where: { id_asistencia: id } });
+            if (!asistencia) {
+                return res.status(404).json({ message: "Asistencia no encontrada" });
+            }
+    
+            // Eliminar la asistencia
+            await asistenciaRepository.remove(asistencia);
+    
+            res.status(200).json({ message: "Asistencia eliminada correctamente" });
+        } catch (error) {
+            console.error("Error al eliminar la asistencia:", error);
+            res.status(500).json({ message: error.message });
+        }
+    };
+    

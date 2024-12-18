@@ -80,6 +80,7 @@ export function formatPostUpdateSesion(sesion) {
     return {
         ...sesion,
         nombreSesion: startCase(sesion.nombreSesion),
+        fecha: formatTempo(sesion.fecha, "DD-MM-YYYY"), 
         disponibilidad: sesion.disponibilidad ? "Disponible" : "No Disponible",
         createdAt: formatTempo(sesion.createdAt, "DD-MM-YYYY"), 
 
